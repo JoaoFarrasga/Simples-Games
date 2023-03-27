@@ -31,7 +31,7 @@ void guessNumber() {
         }
         else if (random < guess)
         {
-            printf("\n\t The Number Is Lower than %d \n\n", guess);
+            printf("\n\t The Number is Lower than %d \n\n", guess);
         }
         guess = getChoice(0, 100);
 
@@ -45,8 +45,8 @@ void guessNumber() {
     }
 
     printf("\t\t Guess the Number \n");
-    printf("\n\t %d is Correct \n\n", guess);
-    printf("\n\t %d points \n\n", points);
+    printf("\n\t %d is Correct \n", guess);
+    printf("\n\t %d points \n", points);
 }
 
 #pragma endregion

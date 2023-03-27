@@ -45,18 +45,25 @@ void mainMenu() {
 void selectGame()
 {
     printf("\t\t Select Game \n"
-           "\t Enter 1 - Guess the number\n"
+           "\t Enter 1 - Guess the Number\n"
+           "\t Enter 2 - Guess the Card\n"
            "\n\t Enter 0 - Back\n");
     
-    int choice = getChoice(0, 1);
+    int choice = getChoice(0, 2);
     switch (choice)
     {
     case 1:
         guessNumber();
         break;
+
+    case 2:
+        guessCard();
+        break;
+
     case 0:
         mainMenu();
         break;
+
     default:
         printf("\n\t//Invalid Option//\n\n");
         selectGame();

@@ -29,4 +29,10 @@ void guessNumber();
 
 #pragma endregion
 
+#pragma region Guess the Card
+
+void guessCard();
+
+#pragma endregion
+
 #pragma endregion
