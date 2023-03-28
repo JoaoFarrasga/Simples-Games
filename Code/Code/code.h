@@ -40,7 +40,6 @@ void guessCard();
 void tictactoe();
 void printBoard();
 int checkWin();
-void choiceMade(int player, int choice);
 void playerVSplayer();
 void playerVScomputer();
 

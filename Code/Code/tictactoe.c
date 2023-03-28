@@ -42,6 +42,8 @@ void tictactoe() {
 
 void printBoard() {
 
+	printf("\t Tic Tac Toe \n\n");
+
 	printf("           |     |     \n");
 	printf("        %c  |  %c  |  %c \n", board[0], board[1], board[2]);
 	printf("      _____|_____|_____\n");
@@ -102,7 +104,7 @@ void playerVSplayer() {
 
 		printBoard();
 
-		printf("Player Number %d Play your Move", player);
+		printf("Player Number %d Play your Move\n", player);
 		choice = getChoice(1, 9);
 
 	    mark = (player == 1) ? 'X' : 'O';
@@ -147,9 +149,9 @@ void playerVSplayer() {
 	printBoard();
 
 	if (win == 1) {
-		printf("Player %d you Won", --player);
+		printf("\n\tPlayer %d you Won\n\n", --player);
 	} else {
-		printf("Game Draw");
+		printf("\n\tGame Draw\n\n");
 	}
 
 }
@@ -169,7 +171,7 @@ void playerVScomputer() {
 
 			printBoard();
 
-			printf("Player Number %d Play your Move", player);
+			printf("Player Play your Move\n", player);
 			choice = getChoice(1, 9);
 
 			mark = (player == 1) ? 'X' : 'O';
@@ -256,9 +258,9 @@ void playerVScomputer() {
 	printBoard();
 
 	if (win == 1) {
-		printf("Player %d you Won", --player);
+		printf("\n\tPlayer you Won\n\n");
 	} else {
-		printf("Game Draw");
+		printf("\n\tGame Draw\n\n");
 	}
 
 }

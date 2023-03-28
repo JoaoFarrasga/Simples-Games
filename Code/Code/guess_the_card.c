@@ -23,7 +23,8 @@ void guessCard() {
     printf("\n\t Number of the Card: \n");
     guessNumb = getChoice(1, 13);
 
-    printf("\t\t Suit of the Card: ");
+    printf("\t\t Suit of the Card: \n\n"
+           "\tHearts = 1, Spades = 2, Diamonds = 3, Clubs = 4\n");
     guessSuit = getChoice(1, 4);
 
 
