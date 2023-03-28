@@ -35,4 +35,15 @@ void guessCard();
 
 #pragma endregion
 
+#pragma region TicTacToe
+
+void tictactoe();
+void printBoard();
+int checkWin();
+void choiceMade(int player, int choice);
+void playerVSplayer();
+void playerVScomputer();
+
+#pragma endregion
+
 #pragma endregion

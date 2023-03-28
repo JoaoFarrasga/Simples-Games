@@ -47,9 +47,10 @@ void selectGame()
     printf("\t\t Select Game \n"
            "\t Enter 1 - Guess the Number\n"
            "\t Enter 2 - Guess the Card\n"
+           "\t Enter 3 - Tic Tac Toe\n"
            "\n\t Enter 0 - Back\n");
     
-    int choice = getChoice(0, 2);
+    int choice = getChoice(0, 3);
     switch (choice)
     {
     case 1:
@@ -58,6 +59,10 @@ void selectGame()
 
     case 2:
         guessCard();
+        break;
+
+    case 3:
+        tictactoe();
         break;
 
     case 0:
