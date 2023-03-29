@@ -12,6 +12,12 @@
 
 char board[9] = { '1', '2', '3', '4', '5', '6', '7', '8', '9' };
 
+/**
+ * @brief Starts the game Tic Tac Toe
+ * 
+ * @param [in] Nothing
+ * @param [out] Nothing
+ */
 void tictactoe() {
 
 	int choice;
@@ -40,6 +46,12 @@ void tictactoe() {
 
 }
 
+/**
+ * @brief Prints the Board to play
+ * 
+ * @param [in] Nothing
+ * @param [out] Nothing
+ */
 void printBoard() {
 
 	printf("\t Tic Tac Toe \n\n");
@@ -56,6 +68,12 @@ void printBoard() {
 
 }
 
+/**
+ * @brief Checks if anyone was won the game of if the Board is Full
+ * 
+ * @param [in] Nothing
+ * @param [out] Nothing
+ */
 int checkWin() {
 
     if (board[0] == board[1] && board[1] == board[2]) {
@@ -91,6 +109,12 @@ int checkWin() {
 	}
 }
 
+/**
+ * @brief Starts the game Player vs Player
+ * 
+ * @param [in] Nothing
+ * @param [out] Nothing
+ */
 void playerVSplayer() {
 
 	int win = -1, player, choice;
@@ -156,6 +180,12 @@ void playerVSplayer() {
 
 }
 
+/**
+ * @brief Starts the game Player vs Computer, Computer is very Simple
+ * 
+ * @param [in] Nothing
+ * @param [out] Nothing
+ */
 void playerVScomputer() {
 
 	int win = -1, player, choice;

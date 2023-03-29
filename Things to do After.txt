@@ -1,0 +1,34 @@
+Get a Stronger Bot for Tic Tac Toe {
+
+    Check if possible win play;
+    Check if possible block play;
+    Check if center available play;
+    Check if corner available {
+        Radom corner play;
+    }
+    Play random;
+}
+
+Add one more Struct to the Scoreboard {
+
+    Add Game {
+
+        int game;
+        Scoreboard* scoreboard;
+        Game* next;
+    }
+    
+    Change Scoreboard {
+
+        char[4] name;
+        int score;
+        Scoreboard* next; 
+    }
+
+    To make Files and Scores Easy to read;
+}
+
+Add Global Points {
+
+    Sum all scores form all games from a user;
+}

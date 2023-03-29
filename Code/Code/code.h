@@ -7,12 +7,35 @@
 
 #pragma endregion
 
+#pragma region Structs
+
+typedef struct Scoreboard {
+    int game;
+    char name[4];
+    int score;
+    struct Scoreboard *next;
+} Scoreboard;
+
+#pragma endregion
+
 #pragma region Function Signs
 
 #pragma region Menus
 
 void mainMenu();
 void selectGame();
+void scoreboardMenu();
+
+#pragma endregion
+
+#pragma region Scoreboard
+
+Scoreboard* scoreboardRead(Scoreboard* header);
+void scoreboardWrite();
+void scoreboardPrint(Scoreboard* header, int numberGame);
+Scoreboard* scoreboardAdd(int numberGame, char* gamerName, int gamerScore);
+Scoreboard* scoreboardInsert(Scoreboard* header, Scoreboard* newScoreboard);
+Scoreboard* scoreboardReversed(Scoreboard* header);
 
 #pragma endregion
 

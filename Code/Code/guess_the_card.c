@@ -10,6 +10,12 @@
 
 #pragma region Guess the Card
 
+/**
+ * @brief Starts the game Guess Card
+ * 
+ * @param [in] Nothing
+ * @param [out] Nothing
+ */
 void guessCard() {
 
     int randomCard, randomSuit, randomNumb, tries = 0, guessSuit, guessNumb, points;

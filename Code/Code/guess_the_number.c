@@ -10,7 +10,12 @@
 
 #pragma region Code
 
-//Guess Number is a game to guess a number between 0 and 100
+/**
+ * @brief Starts the game Guess Number
+ * 
+ * @param [in] Nothing
+ * @param [out] Nothing
+ */
 void guessNumber() {
 
     int random, tries = 0, guess, points;

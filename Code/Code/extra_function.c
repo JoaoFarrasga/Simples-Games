@@ -10,7 +10,13 @@
 
 #pragma region Extra Functions
 
-//GetChoice is a function to get the number between the numbers given
+/**
+ * @brief GetChoice asks for a Int from the User
+ * 
+ * @param [in] Min A Minimum for the Choice
+ * @param [in] Max A Maximum for the Choice
+ * @param [out] Choice The Choice from the User
+ */
 int getChoice(int min, int max) {
 
     int choiceInt = -1;
@@ -28,7 +34,13 @@ int getChoice(int min, int max) {
     return choiceInt;
 }
 
-//randomInt is a Function to get a random number in a set of numbers given
+/**
+ * @brief RandomInt Gives a Random Int
+ * 
+ * @param [in] Min A Minimum for the Random Number
+ * @param [in] Max A Maximum for the Random Number
+ * @param [out] Random The Random Generated Number
+ */
 int randomInt(int min, int max) {
 
     srand((unsigned)time(NULL));
