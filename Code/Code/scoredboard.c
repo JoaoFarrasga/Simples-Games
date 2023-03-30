@@ -146,9 +146,11 @@ Scoreboard* scoreboardAdd(int numberGame, char* gamerName, int gamerScore) {
 
     Scoreboard* newScoreboard = (Scoreboard*)malloc(sizeof(Scoreboard));
 
-    if ( newScoreboard == NULL) {
+    if (newScoreboard == NULL) {
+
         printf("Sorry but the Scoreboard is not Working right Now");
         return NULL;
+        
     }
 
     newScoreboard->game = numberGame;

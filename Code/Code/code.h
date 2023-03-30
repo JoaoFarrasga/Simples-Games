@@ -16,6 +16,12 @@ typedef struct Scoreboard {
     struct Scoreboard *next;
 } Scoreboard;
 
+typedef struct ScoreGlobal {
+    char name[4];
+    int score;
+    struct ScoreGlobal *next;
+} ScoreGlobal;
+
 #pragma endregion
 
 #pragma region Function Signs
@@ -41,6 +47,17 @@ void scoreboardInsert(Scoreboard* newScoreboard);
 void scoreboardReversed();
 void scoreGameAdd(int numberGame, char* gamerName, int gamerScore);
 int scoreGlobal(char* gamerName);
+
+#pragma endregion
+
+#pragma region Global Score
+
+void globalRead(Scoreboard* header);
+void globalPrint();
+ScoreGlobal* globalAdd(char* gamerName, int globalScore);
+void globalInsert(ScoreGlobal* newGlobal);
+void globalReversed();
+void globalExists(char* gamerName);
 
 #pragma endregion
 
