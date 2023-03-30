@@ -124,7 +124,7 @@ void scoreboardPrint(int numberGame) {
 
     }
 
-    printf("\n\tEnter 0 - Back\n");
+    printf("\n\t\tEnter 0 - Back\n");
     int choice = getChoice(0, 0);
     if (choice == 0) {
 
@@ -248,13 +248,10 @@ void scoreGameAdd(int numberGame, char* gamerName, int gamerScore) {
             if (aux->score < newScoreboard->score) {
             
             aux->score = newScoreboard->score;
+
+            } 
+
             return;
-
-            } else {
-
-            return;
-
-            }
 
         }
 
@@ -263,6 +260,33 @@ void scoreGameAdd(int numberGame, char* gamerName, int gamerScore) {
     }
 
     scoreboardInsert(newScoreboard);
+
+}
+
+/**
+ * @brief Score Global is a function that calculates the Global Score
+ * 
+ * @param [in] Name The Name of the User to give Global Score 
+ * @param [out] GlobalScore The Global Score of the User
+ */
+int scoreGlobal(char* gamerName) {
+
+    int scoreGlobal = 0;
+    Scoreboard* aux = header;
+
+    while (aux != NULL) {
+
+        if (strcmp(aux->name, gamerName) == 0) {
+
+            scoreGlobal = scoreGlobal + aux->score;
+
+        }
+
+        aux = aux->next;
+
+    }
+
+    return scoreGlobal;
 
 }
 

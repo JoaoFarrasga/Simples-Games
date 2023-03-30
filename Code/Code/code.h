@@ -27,6 +27,7 @@ void selectGame();
 void scoreboardMenu();
 void playAgainMenu(int numberGame);
 void endGameMenu(int numberGame, int points);
+void globalScore();
 
 #pragma endregion
 
@@ -39,6 +40,7 @@ Scoreboard* scoreboardAdd(int numberGame, char* gamerName, int gamerScore);
 void scoreboardInsert(Scoreboard* newScoreboard);
 void scoreboardReversed();
 void scoreGameAdd(int numberGame, char* gamerName, int gamerScore);
+int scoreGlobal(char* gamerName);
 
 #pragma endregion
 
@@ -46,7 +48,6 @@ void scoreGameAdd(int numberGame, char* gamerName, int gamerScore);
 
 int getChoice(int min, int max);
 int randomInt(int min, int max);
-char* getChar();
 
 #pragma endregion
 

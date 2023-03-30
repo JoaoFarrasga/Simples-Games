@@ -32,3 +32,13 @@ Add Global Points {
 
     Sum all scores form all games from a user;
 }
+
+List of Games {
+
+    BlackJack;
+    Quatro Em Linha;
+    Jogo da Forca;
+    Galo Cervejeiro;
+    MasterMind;
+    Minesweeper;
+}

@@ -20,15 +20,14 @@
  * @param [out] Nothing
  */
 void mainMenu() {
-    
-    scoreboardRead();
 
     printf("\t\t Main Menu \n\n"
            "\t Enter 1 - Select Game\n"
            "\t Enter 2 - Scoreboard\n"
+           "\t Enter 3 - Global Score\n"
            "\n\t Enter 0 - Quit\n");
 
-    int choice = getChoice(0, 2);
+    int choice = getChoice(0, 3);
     switch (choice) {
         case 1:
             selectGame();
@@ -36,6 +35,10 @@ void mainMenu() {
         
         case 2:
             scoreboardMenu();
+            break;
+
+        case 3:
+            globalScore();
             break;
 
         case 0:
@@ -203,6 +206,32 @@ void endGameMenu(int numberGame, int points) {
 
     scoreGameAdd(numberGame, name, points);
     playAgainMenu(numberGame);
+
+}
+
+void globalScore() {
+
+    int globalScore;
+    char name[4];
+
+    printf("\tPlease Insert your Name here: \n");
+    printf("\n Select - ");
+    scanf(" %s", name);
+
+    globalScore = scoreGlobal(name);
+
+    //system("cls");
+
+    printf("\n\n\tYour Global Points are: %d\n\n", globalScore);
+
+    printf("\tEnter 0 - Back\n\n");
+
+    int choice = getChoice(0, 0);
+    if (choice == 0) {
+
+        mainMenu();
+
+    }
 
 }
 
