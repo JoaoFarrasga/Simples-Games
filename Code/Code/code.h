@@ -25,17 +25,20 @@ typedef struct Scoreboard {
 void mainMenu();
 void selectGame();
 void scoreboardMenu();
+void playAgainMenu(int numberGame);
+void endGameMenu(int numberGame, int points);
 
 #pragma endregion
 
 #pragma region Scoreboard
 
-Scoreboard* scoreboardRead(Scoreboard* header);
+void scoreboardRead();
 void scoreboardWrite();
-void scoreboardPrint(Scoreboard* header, int numberGame);
+void scoreboardPrint(int numberGame);
 Scoreboard* scoreboardAdd(int numberGame, char* gamerName, int gamerScore);
-Scoreboard* scoreboardInsert(Scoreboard* header, Scoreboard* newScoreboard);
-Scoreboard* scoreboardReversed(Scoreboard* header);
+void scoreboardInsert(Scoreboard* newScoreboard);
+void scoreboardReversed();
+void scoreGameAdd(int numberGame, char* gamerName, int gamerScore);
 
 #pragma endregion
 
@@ -43,6 +46,7 @@ Scoreboard* scoreboardReversed(Scoreboard* header);
 
 int getChoice(int min, int max);
 int randomInt(int min, int max);
+char* getChar();
 
 #pragma endregion
 

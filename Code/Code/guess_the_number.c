@@ -52,6 +52,11 @@ void guessNumber() {
     printf("\t\t Guess the Number \n");
     printf("\n\t %d is Correct \n", guess);
     printf("\n\t %d points \n", points);
+
+    getch();
+    system("cls");
+
+    endGameMenu(1, points);
 }
 
 #pragma endregion

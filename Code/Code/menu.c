@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <conio.h>
+#include <string.h>
 #include "code.h"
 
 #pragma endregion
@@ -20,10 +21,12 @@
  */
 void mainMenu() {
     
-    printf("\t\t Main Menu \n"
-           "\t 1 - Select Game\n"
-           "\t 2 - Scoreboard\n"
-           "\n\t 0 - Quit\n");
+    scoreboardRead();
+
+    printf("\t\t Main Menu \n\n"
+           "\t Enter 1 - Select Game\n"
+           "\t Enter 2 - Scoreboard\n"
+           "\n\t Enter 0 - Quit\n");
 
     int choice = getChoice(0, 2);
     switch (choice) {
@@ -54,7 +57,7 @@ void mainMenu() {
  */
 void selectGame()
 {
-    printf("\t\t Select Game \n"
+    printf("\t\t Select Game \n\n"
            "\t Enter 1 - Guess the Number\n"
            "\t Enter 2 - Guess the Card\n"
            "\t Enter 3 - Tic Tac Toe\n"
@@ -94,29 +97,26 @@ void selectGame()
  */
 void scoreboardMenu() {
 
-    Scoreboard* header = NULL;
+    scoreboardWrite();
 
-    header = scoreboardRead(header);
-
-    printf("\t\t Scoreboard\n"
-           "\t\tSelect Game\n"
-           "\t 1 - Guess the Number\n"
-           "\t 2 - Guess the Card\n"
-           "\t 3 - Tic Tac Toe"
-           "\n\t 0 - Back\n");
+    printf("\t\tScoreboard\n\n"
+           "\t Enter 1 - Guess the Number\n"
+           "\t Enter 2 - Guess the Card\n"
+           "\t Enter 3 - Tic Tac Toe\n"
+           "\n\t Enter 0 - Back\n");
 
     int choice = getChoice(0, 3);
     switch (choice) {
         case 1:
-            scoreboardPrint(header, choice);
+            scoreboardPrint(choice);
             break;
         
         case 2:
-            scoreboardPrint(header, choice);
+            scoreboardPrint(choice);
             break;
 
         case 3:
-            scoreboardPrint(header, choice);
+            scoreboardPrint(choice);
             break;
 
         case 0:
@@ -128,6 +128,81 @@ void scoreboardMenu() {
             scoreboardMenu();
             break;
     }
+
+}
+
+/**
+ * @brief Play Again Menu is a Menu that Ask's if the User wants to play again
+ * 
+ * @param [in] Game The Number of the Game 
+ */
+void playAgainMenu(int numberGame) {
+
+    system("cls");
+
+    printf("\t\tDo you Wanna Play Again?\n\n"
+           "\t Enter 1 - Play Again\n\n"
+           "\t Enter 0 - Back\n");
+
+    int choice = getChoice(0, 1);
+    switch (choice)
+    {
+    case 1:
+
+        switch (numberGame) {
+
+        case 1:
+            guessNumber();
+            break;
+
+        case 2:
+            guessCard();
+            break;
+
+        case 3:
+            tictactoe();
+            break;
+
+        default:
+            mainMenu();
+            break;
+
+        }
+    
+    case 0:
+        mainMenu();
+        break;
+
+    default:
+        mainMenu();
+        break;
+
+    }
+}
+
+/**
+ * @brief End Game Menu Ask's the Name and Inserts the Score in the Scoreboard 
+ *
+ * @param [in] Game The Number of the Game
+ * @param [in] Points The Points Earned
+ * @param [out] Nothing 
+ */
+void endGameMenu(int numberGame, int points) {
+
+    char name[4];
+
+    printf("\t\t Score \n\n\t Your Score is %d\n\n", points);
+    
+    printf("\tWhat is your Name? \n");
+    printf("\n Select - ");
+    scanf(" %s", name);
+
+    system("cls");
+
+    printf("Name: %s", name);
+
+    scoreGameAdd(numberGame, name, points);
+    playAgainMenu(numberGame);
 
 }
 

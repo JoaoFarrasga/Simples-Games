@@ -109,6 +109,12 @@ void guessCard() {
     }
 
     printf("\n\t %d points \n\n", points);
+
+    getch();
+    system("cls");
+
+    endGameMenu(2, points);
+
 }
 
 #pragma endregion

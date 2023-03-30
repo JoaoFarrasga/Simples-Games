@@ -11,15 +11,16 @@
 
 #pragma region Code
 
+Scoreboard* header = NULL;
 int scoreCount = 0;
 
 /**
  * @brief It reads the File and puts everything in the Header
  * 
- * @param [in] Header The Header to add the new Scoreboards
- * @param [out] Header The Header with the new Scoreboardsw
+ * @param [in] Nothing
+ * @param [out] Nothing
  */
-Scoreboard* scoreboardRead(Scoreboard* header) {
+void scoreboardRead() {
 
     int score, game;
     char name[4];
@@ -30,15 +31,13 @@ Scoreboard* scoreboardRead(Scoreboard* header) {
     file = fopen("scoreboard.txt", "r");
 
     if (file == NULL) {
-        printf("Sorry but the Scoreboard is not Working right Now");
-        return NULL;
+        printf("Sorry but the Scoreboard is not Working right Now\n\n");
     }
 
     while (fscanf(file, "%d %3s %d", &game, name, &score) == 3) {
 
         res = scoreboardAdd(game, name, score);
-
-        header = scoreboardInsert(header, res);
+        scoreboardInsert(res);
 
         scoreCount++;
 
@@ -50,31 +49,86 @@ Scoreboard* scoreboardRead(Scoreboard* header) {
 
     }
 
-    header = scoreboardReversed(header);
-
-    return header;
+    scoreboardReversed();
 
 }
 
+/**
+ * @brief It prints the Linked List in the File
+ * 
+ * @param [in] Nothing
+ * @param [out] Nothing
+ */
 void scoreboardWrite() {
 
-}
+    FILE *file;
 
-void scoreboardPrint(Scoreboard* header, int numberGame) {
+    file = fopen("scoreboard.txt", "w");
+
+    if (file == NULL) {
+        printf("Sorry but the Scoreboard is not Working right Now");
+    }
 
     Scoreboard* node = header;
+
+    while (node) {
+        
+        fprintf(file, "%d %s %d\n", node->game, node->name, node->score);
+        node = node->next;
+
+    }
+
+    fclose(file);
+
+}
+
+/**
+ * @brief Scoreboard Print, after given a Number it prints the Users with Scores on that Games
+ * 
+ * @param [in] Game The Number of the Game that the User choose to see
+ * @param [out] Nothing 
+ */
+void scoreboardPrint(int numberGame) {
+
+    int max = 0;
+    Scoreboard* node = header;
+
+    printf("\t\tScoreboard \n\n");
 
     while (node != NULL) {
 
         if (node->game == numberGame) {
 
-            printf("Game: %d\t\t", node->game);
+            printf("Place: %d\t", max + 1);
             printf("Name: %s\t", node->name);
             printf("Score: (%d)\n", node->score);
+
+            max++;
 
         }
 
         node = node->next;
+
+        if (max == 10) {
+
+            break;
+
+        } 
+
+    }
+
+    while (max < 10) {
+
+        printf("Place: %d\tName: XXX\tScore: (0)\n", max + 1);
+        max++;
+
+    }
+
+    printf("\n\tEnter 0 - Back\n");
+    int choice = getChoice(0, 0);
+    if (choice == 0) {
+
+        scoreboardMenu();
 
     }
 
@@ -109,10 +163,9 @@ Scoreboard* scoreboardAdd(int numberGame, char* gamerName, int gamerScore) {
 /**
  * @brief Inserts a Scoreboard in the Header
  * 
- * @param [in] Header The Header with everything
  * @param [out] newScoreboard The newScoreboard to add to the Header
  */
-Scoreboard* scoreboardInsert(Scoreboard* header, Scoreboard* newScoreboard) {
+void scoreboardInsert(Scoreboard* newScoreboard) {
 
     if (header == NULL) {
 
@@ -144,16 +197,19 @@ Scoreboard* scoreboardInsert(Scoreboard* header, Scoreboard* newScoreboard) {
 
     }
 
-    return header;
-
 }
 
-Scoreboard* scoreboardReversed(Scoreboard* header) {
+/**
+ * @brief Scoreboard Reversed is used to reverse a List
+ * 
+ * @param [in] Nothing
+ * @param [out] Nothing
+ */
+void scoreboardReversed() {
 
     if (header == NULL) {
 
         printf("Sorry but the Scoreboard is not Working right Now");
-        return NULL;
 
     }
 
@@ -169,7 +225,44 @@ Scoreboard* scoreboardReversed(Scoreboard* header) {
 
     }
 
-    return newHeader;
+    header = newHeader;
+
+}
+
+/**
+ * @brief Score Game Add is a function used in the Games to add in the Header
+ * 
+ * @param [in] numberGame Number Given to put in the newScoreboard->game
+ * @param [in] gamerName Name Given to put in the newScoreboard->name
+ * @param [in] gamerScore Score Given to put in the newScoreboard->score
+ */
+void scoreGameAdd(int numberGame, char* gamerName, int gamerScore) {
+
+    Scoreboard* newScoreboard = scoreboardAdd(numberGame, gamerName, gamerScore);
+    Scoreboard* aux = header;
+
+    while (aux != NULL) {
+
+        if (aux->game == newScoreboard->game && (strcmp(aux->name, newScoreboard->name) == 0)) {
+            
+            if (aux->score < newScoreboard->score) {
+            
+            aux->score = newScoreboard->score;
+            return;
+
+            } else {
+
+            return;
+
+            }
+
+        }
+
+        aux = aux->next;
+
+    }
+
+    scoreboardInsert(newScoreboard);
 
 }
 
