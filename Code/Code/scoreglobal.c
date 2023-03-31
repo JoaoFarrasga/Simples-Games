@@ -29,6 +29,8 @@ void globalRead(Scoreboard* header) {
 
     }
 
+    globalHeader = NULL;
+    
     Scoreboard* node = header;
     
     while (node != NULL) {
@@ -108,11 +110,8 @@ void globalPrint() {
 void globalPrintOne() {
 
     int globalScore;
-    char name[4];
 
-    printf("\tPlease Insert your Name here: \n");
-    printf("\n Select - ");
-    scanf(" %s", name);
+    char* name = getName();
 
     globalScore = scoreGlobal(name);
 
@@ -120,7 +119,7 @@ void globalPrintOne() {
 
     printf("\n\n\tYour Global Points are: %d\n\n", globalScore);
 
-    printf("\tEnter 0 - Back\n\n");
+    printf("\tEnter 0 - Back\n");
 
     int choice = getChoice(0, 0);
     if (choice == 0) {

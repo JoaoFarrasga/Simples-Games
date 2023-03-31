@@ -21,6 +21,8 @@
  */
 void mainMenu() {
 
+    scoreboardWrite();
+
     printf("\t\t Main Menu \n\n"
            "\t Enter 1 - Select Game\n"
            "\t Enter 2 - Scoreboard\n"
@@ -42,7 +44,8 @@ void mainMenu() {
             break;
 
         case 0:
-            //Quit
+            printf("\n\tGoodbye\n\n");
+            exit;
             break;
         
         default:
@@ -63,10 +66,11 @@ void selectGame()
     printf("\t\t Select Game \n\n"
            "\t Enter 1 - Guess the Number\n"
            "\t Enter 2 - Guess the Card\n"
-           "\t Enter 3 - Tic Tac Toe\n"
+           "\t Enter 3 - Black Jack\n"
+           "\t Enter 4 - Tic Tac Toe\n"
            "\n\t Enter 0 - Back\n");
     
-    int choice = getChoice(0, 3);
+    int choice = getChoice(0, 4);
     switch (choice)
     {
     case 1:
@@ -78,6 +82,10 @@ void selectGame()
         break;
 
     case 3:
+        //blackjack();
+        break;
+
+    case 4:
         tictactoe();
         break;
 
@@ -100,15 +108,14 @@ void selectGame()
  */
 void scoreboardMenu() {
 
-    scoreboardWrite();
-
     printf("\t\tScoreboard\n\n"
            "\t Enter 1 - Guess the Number\n"
            "\t Enter 2 - Guess the Card\n"
-           "\t Enter 3 - Tic Tac Toe\n"
+           "\t Enter 3 - Black Jack\n"
+           "\t Enter 4 - Tic Tac Toe\n"
            "\n\t Enter 0 - Back\n");
 
-    int choice = getChoice(0, 3);
+    int choice = getChoice(0, 4);
     switch (choice) {
         case 1:
             scoreboardPrint(choice);
@@ -119,6 +126,10 @@ void scoreboardMenu() {
             break;
 
         case 3:
+            //scoreboardPrint(choice);
+            break;
+
+        case 4:
             scoreboardPrint(choice);
             break;
 
@@ -163,21 +174,25 @@ void playAgainMenu(int numberGame) {
             break;
 
         case 3:
+            //blackjack();
+            break;
+
+        case 4:
             tictactoe();
             break;
 
         default:
-            mainMenu();
+            selectGame();
             break;
 
         }
     
     case 0:
-        mainMenu();
+        selectGame();
         break;
 
     default:
-        mainMenu();
+        selectGame();
         break;
 
     }
@@ -192,17 +207,11 @@ void playAgainMenu(int numberGame) {
  */
 void endGameMenu(int numberGame, int points) {
 
-    char name[4];
-
     printf("\t\t Score \n\n\t Your Score is %d\n\n", points);
     
-    printf("\tWhat is your Name? \n");
-    printf("\n Select - ");
-    scanf(" %s", name);
+    char* name = getName();
 
     system("cls");
-
-    printf("Name: %s", name);
 
     scoreGameAdd(numberGame, name, points);
     playAgainMenu(numberGame);

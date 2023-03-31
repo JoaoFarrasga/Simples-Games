@@ -34,12 +34,20 @@ void scoreboardRead() {
         printf("Sorry but the Scoreboard is not Working right Now\n\n");
     }
 
+    header == NULL;
+
     while (fscanf(file, "%d %3s %d", &game, name, &score) == 3) {
 
-        res = scoreboardAdd(game, name, score);
-        scoreboardInsert(res);
+        int check = scoreExists(game, name);
 
-        scoreCount++;
+        if (check == 0) {
+
+            res = scoreboardAdd(game, name, score);
+            scoreboardInsert(res);
+
+            scoreCount++;
+
+        }
 
         if (fgetc(file) == '\n') {
 
@@ -159,6 +167,43 @@ Scoreboard* scoreboardAdd(int numberGame, char* gamerName, int gamerScore) {
     newScoreboard->next = NULL;
 
     return newScoreboard;
+
+}
+
+/**
+ * @brief Score Exists check if there is already a Scoreboard with that name
+ * 
+ * @param [in] Game Game to see if it exists
+ * @param [in] Name Name to see if it exists 
+ * @param [out] Int 0 == False, 1 == True 
+ */
+int scoreExists(int numberGame, char* gamerName) {
+
+    if (header == NULL) {
+
+        return 0;
+
+    }
+
+    Scoreboard* aux = header;
+
+    while (aux != NULL) {
+
+        if (aux->game == numberGame) {
+
+            if (strcmp(aux->name, gamerName) == 0) {
+
+                return 1;
+
+            }
+
+        }
+
+        aux = aux->next;
+
+    }
+
+    return 0;
 
 }
 
@@ -303,4 +348,5 @@ void scoreGlobalRead() {
     globalRead(header);
 
 }
+
 #pragma endregion

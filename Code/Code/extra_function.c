@@ -5,6 +5,7 @@
 #include <time.h>
 #include <conio.h>
 #include <string.h>
+#include <ctype.h>
 #include "code.h"
 
 #pragma endregion
@@ -49,34 +50,49 @@ int randomInt(int min, int max) {
 
 }
 
-char* getChar() {
+/**
+ * @brief GetName asks for the Name from the User 
+ * 
+ * @param [in] Nothing
+ * @param [out] Name Name of the User
+ */
+char* getName() {
 
     int valid = 0;
     char input[4];
 
-    while (!valid) {
+    printf("\t\tWhat is your Name? \n");
+    printf("\n Select - ");
+    scanf(" %s", input);
 
-        printf("What is your Name? \n");
-        printf("\n Select - ");
-        scanf(" %s", input);
+    while (valid == 0) {
 
         if (strlen(input) == 3) {
 
             valid = 1;
-        
+
         } else {
 
-            printf("Invalid name. Please enter a 3-character string.\n");
-        
+            printf("\n\nInvalid name. Please enter a 3-character name.\n");
+            printf("\n Select - ");
+            scanf(" %s", input);
+
         }
 
-        char* output = malloc(4 * sizeof(char));
-        strncpy(output, input, 3);
-        output[3] = '\0';
+    }
 
-        return output;
+    char* output = malloc(sizeof(char) * 4);
+
+    for (int i = 0; i < 3; i++) {
+
+        output[i] = toupper(input[i]);
 
     }
+
+    output[3] = '\0';
+
+    system("cls");
+    return output;
 
 }
 

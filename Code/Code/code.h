@@ -57,6 +57,7 @@ void globalRead(Scoreboard* header);
 void globalPrint();
 void globalPrintOne();
 ScoreGlobal* globalAdd(char* gamerName, int globalScore);
+int scoreExists(int numberGame, char* gamerName);
 void globalInsert(ScoreGlobal* newGlobal);
 void globalReversed();
 int globalExists(char* gamerName);
@@ -67,6 +68,8 @@ int globalExists(char* gamerName);
 
 int getChoice(int min, int max);
 int randomInt(int min, int max);
+char* getName();
+char* capitalize(char name[4]);
 
 #pragma endregion
 
