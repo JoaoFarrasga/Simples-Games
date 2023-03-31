@@ -82,7 +82,7 @@ void selectGame()
         break;
 
     case 3:
-        //blackjack();
+        blackjack();
         break;
 
     case 4:

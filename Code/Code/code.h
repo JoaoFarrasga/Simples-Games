@@ -85,6 +85,16 @@ void guessCard();
 
 #pragma endregion
 
+#pragma region Black Jack
+
+int printCards(int card);
+int pointCard(int card);
+void pictureCard(int card);
+int shuffleCards(int card[]);
+void blackjack();
+
+#pragma endregion
+
 #pragma region TicTacToe
 
 void tictactoe();

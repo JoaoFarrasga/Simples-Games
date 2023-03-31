@@ -22,7 +22,7 @@ void tictactoe() {
 
 	int choice;
 
-	printf("\t\t Welcome to Tic Tac Toe \n"
+	printf("\t\t Welcome to Tic Tac Toe \n\n"
            "\t Enter 1 - Player vs Player\n"
            "\t Enter 2 - Player vs Computer\n"
 		   "\n\t Enter 0 - Back\n");
