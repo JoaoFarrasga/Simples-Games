@@ -28,11 +28,6 @@ Add one more Struct to the Scoreboard {
     To make Files and Scores Easy to read;
 }
 
-Add Global Points {
-
-    Sum all scores form all games from a user;
-}
-
 List of Games {
 
     BlackJack;

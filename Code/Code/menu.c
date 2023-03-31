@@ -38,7 +38,7 @@ void mainMenu() {
             break;
 
         case 3:
-            globalScore();
+            globalScoreMenu();
             break;
 
         case 0:
@@ -209,27 +209,41 @@ void endGameMenu(int numberGame, int points) {
 
 }
 
-void globalScore() {
+/**
+ * @brief Menu to choose what Global Score you want to see
+ * 
+ * @param [in] Nothing
+ * @param [out] Nothing
+ */
+void globalScoreMenu() {
 
-    int globalScore;
-    char name[4];
+    system("cls");
 
-    printf("\tPlease Insert your Name here: \n");
-    printf("\n Select - ");
-    scanf(" %s", name);
+    scoreGlobalRead();
 
-    globalScore = scoreGlobal(name);
+    printf("\t\tGlobal Score\n\n"
+           "\t Enter 1 - Your Global Score\n"
+           "\t Enter 2 - Global Score\n"
+           "\t Enter 0 - Back\n");
 
-    //system("cls");
+    int choice = getChoice(0, 2);
+    switch (choice) {
+        case 1:
+            globalPrintOne();
+            break;
 
-    printf("\n\n\tYour Global Points are: %d\n\n", globalScore);
+        case 2:
+            globalPrint();
+            break;
 
-    printf("\tEnter 0 - Back\n\n");
+        case 0:
+            mainMenu();
+            break;
 
-    int choice = getChoice(0, 0);
-    if (choice == 0) {
-
-        mainMenu();
+        default:
+            printf("\n\t//Invalid Option//\n\n");
+            globalScoreMenu();
+            break;       
 
     }
 

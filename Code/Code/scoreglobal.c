@@ -12,9 +12,43 @@
 #pragma region Code
 
 ScoreGlobal* globalHeader = NULL;
-int userCount;
 
+/**
+ * @brief It reads the Scoreboard and creates the Global Score
+ * 
+ * @param [in] Scoreboard The Header of the Scoreboards
+ * @param [out] Nothing 
+ */
 void globalRead(Scoreboard* header) {
+
+    int check, globalScore;
+
+    if (header == NULL) {
+
+        printf("Sorry but the Global Score is not Working right Now");
+
+    }
+
+    Scoreboard* node = header;
+    
+    while (node != NULL) {
+
+        check = globalExists(node->name);
+
+        if (check == 0 ) {
+
+            globalScore = scoreGlobal(node->name);
+
+            ScoreGlobal* newNode = globalAdd(node->name, globalScore);
+            globalInsert(newNode);
+
+        }
+
+        node = node->next;
+
+    }
+
+    globalReversed();
 
 }
 
@@ -27,7 +61,7 @@ void globalRead(Scoreboard* header) {
 void globalPrint() {
 
     int max = 0;
-    ScoreGlobal* node = header;
+    ScoreGlobal* node = globalHeader;
 
     printf("\t\tGlobal Score \n\n");
 
@@ -51,7 +85,7 @@ void globalPrint() {
     while (max < 10) {
 
         printf("Place: %d\tName: XXX\tScore: (0)\n", max + 1);
-        max++
+        max++;
 
     }
 
@@ -59,7 +93,39 @@ void globalPrint() {
     int choice = getChoice(0, 0);
     if (choice == 0) {
 
-        //Global Score Menu
+        globalScoreMenu();
+
+    }
+
+}
+
+/**
+ * @brief It prints one Global Score after given the Name of the User
+ * 
+ * @param [in] Nothing
+ * @param [out] Nothing
+ */
+void globalPrintOne() {
+
+    int globalScore;
+    char name[4];
+
+    printf("\tPlease Insert your Name here: \n");
+    printf("\n Select - ");
+    scanf(" %s", name);
+
+    globalScore = scoreGlobal(name);
+
+    system("cls");
+
+    printf("\n\n\tYour Global Points are: %d\n\n", globalScore);
+
+    printf("\tEnter 0 - Back\n\n");
+
+    int choice = getChoice(0, 0);
+    if (choice == 0) {
+
+        globalScoreMenu();
 
     }
 
@@ -74,7 +140,7 @@ void globalPrint() {
  */
 ScoreGlobal* globalAdd(char* gamerName, int globalScore) {
 
-    ScoreGlobal* newGlobal = (ScoreGlobal*)malloc(sizepf(ScoreGlobal));
+    ScoreGlobal* newGlobal = (ScoreGlobal*)malloc(sizeof(ScoreGlobal));
 
     if (newGlobal == NULL) {
 
@@ -91,8 +157,36 @@ ScoreGlobal* globalAdd(char* gamerName, int globalScore) {
 
 }
 
-void globalExists(char* gamerName) {
+/**
+ * @brief Global Exists check if there is already a ScoreGlobal with that name
+ * 
+ * @param [in] Name Name to see if it exists 
+ * @param [out] Int 0 == False, 1 == True 
+ */
+int globalExists(char* gamerName) {
     
+    if (globalHeader == NULL) {
+
+        return 0;
+
+    }
+
+    ScoreGlobal* aux = globalHeader;
+
+    while (aux != NULL) {
+
+        if (strcmp(aux->name, gamerName) == 0) {
+
+            return 1;
+
+        }
+
+        aux = aux->next;
+
+    }
+
+    return 0;
+
 } 
 
 /**
@@ -134,6 +228,12 @@ void globalInsert(ScoreGlobal* newGlobal) {
 
 }
 
+/**
+ * @brief Score Global Reversed is used to reverse a List
+ * 
+ * @param [in] Nothing
+ * @param [out] Nothing
+ */
 void globalReversed() {
 
     if (globalHeader == NULL) {
@@ -147,14 +247,14 @@ void globalReversed() {
 
     while (node != NULL) {
 
-        ScoreGlobal* newNode = scoreboardAdd(node->name, node->score);
+        ScoreGlobal* newNode = globalAdd(node->name, node->score);
         newNode->next = newHeader;
         newHeader = newNode;
         node = node->next;
 
     }
 
-    header = newHeader;
+    globalHeader = newHeader;
 
 }
 

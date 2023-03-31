@@ -292,4 +292,15 @@ int scoreGlobal(char* gamerName) {
 
 }
 
+/**
+ * @brief Starts Global Score Read
+ * 
+ * @param [in] Nothing
+ * @param [out] Nothing
+ */
+void scoreGlobalRead() {
+
+    globalRead(header);
+
+}
 #pragma endregion

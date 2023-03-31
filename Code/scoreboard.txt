@@ -1,1 +1,6 @@
 1 JON 4
+2 JON 8
+3 MAI 9
+2 ROD 3
+1 ROD 4
+3 AND 10
