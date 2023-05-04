@@ -87,10 +87,9 @@ void guessCard();
 
 #pragma region Black Jack
 
-int printCards(int card);
+void shuffle(int* cards);
+void printCard(int card);
 int pointCard(int card);
-void pictureCard(int card);
-int shuffleCards(int card[]);
 void blackjack();
 
 #pragma endregion
@@ -98,6 +97,7 @@ void blackjack();
 #pragma region TicTacToe
 
 void tictactoe();
+void resetBoard();
 void printBoard();
 int checkWin();
 void playerVSplayer();

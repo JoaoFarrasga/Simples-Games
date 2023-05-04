@@ -22,6 +22,8 @@ void tictactoe() {
 
 	int choice;
 
+	resetBoard();
+
 	printf("\t\t Welcome to Tic Tac Toe \n\n"
            "\t Enter 1 - Player vs Player\n"
            "\t Enter 2 - Player vs Computer\n"
@@ -43,6 +45,25 @@ void tictactoe() {
 			break;
 
 	}
+
+}
+
+/**
+ * @brief Resets the Board making it Playable Again
+ * 
+ * @param [in] Nothing
+ * @param [out] Nothing
+*/
+void resetBoard() {
+
+    for (int i = 0; i < 9; i++) {
+
+        if (board[i] != i + '1') {
+
+			board[i] = i + '1';
+
+        }
+    }
 
 }
 
@@ -240,7 +261,7 @@ void playerVScomputer() {
 
 			win = checkWin();
 			player++;
-
+			
 		} else {
 
 			choice = randomInt(1, 9);
@@ -288,10 +309,21 @@ void playerVScomputer() {
 	printBoard();
 
 	if (win == 1) {
-		printf("\n\tPlayer you Won\n\n");
-	} else {
-		printf("\n\tGame Draw\n\n");
+
+		if (--player == 1) {
+
+			printf("The Player Won");
+			endGameMenu(4, 1);
+
+		} else {
+
+			printf("The Computer Won");
+			endGameMenu(4, -1);
+
+		}
+	
 	}
+
 
 }
 

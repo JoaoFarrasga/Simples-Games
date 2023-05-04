@@ -61,8 +61,7 @@ void mainMenu() {
  * @param [in] Nothing
  * @param [out] Nothing
  */
-void selectGame()
-{
+void selectGame() {
     printf("\t\t Select Game \n\n"
            "\t Enter 1 - Guess the Number\n"
            "\t Enter 2 - Guess the Card\n"
@@ -126,7 +125,7 @@ void scoreboardMenu() {
             break;
 
         case 3:
-            //scoreboardPrint(choice);
+            scoreboardPrint(choice);
             break;
 
         case 4:
@@ -214,6 +213,32 @@ void endGameMenu(int numberGame, int points) {
     system("cls");
 
     scoreGameAdd(numberGame, name, points);
+    playAgainMenu(numberGame);
+
+}
+
+/**
+ * @brief End Game Menu Dounble Ask's the Name and Inserts the Score in the Scoreboard of two Players 
+ *
+ * @param [in] Game The Number of the Game
+ * @param [in] wonPoints The Points Earned by the Person that Won
+ * @param [in] losePoints The Poist Lost by the Person that Lost
+ * @param [in] wonPlayer The PLayer that Won the Game
+ * @param [in] losePlayer The PLayer that Lost the Game
+ * @param [out] Nothing 
+ */
+void endGameMenuDouble(int numberGame, int wonPoints, int losePoints, int wonPlayer, int losePlayer) {
+
+    printf("\t\t Player %d won the game receiving %d Points\n\n", wonPlayer, wonPoints);
+    char* wonName = getName();
+    scoreGameAdd(numberGame, wonName, wonPoints);
+
+    system("cls");
+
+    printf("\t\t Player %d lost the game losing %d Points\n\n", losePlayer, losePoints);
+    char* loseName = getName();
+    scoreGameAdd(numberGame, loseName, losePoints);
+
     playAgainMenu(numberGame);
 
 }

@@ -28,9 +28,15 @@ Add one more Struct to the Scoreboard {
     To make Files and Scores Easy to read;
 }
 
+Change BlackJack to have the real rules {
+
+    Ace is 1 or 11;
+    Gives two cards to the Computer in the Begining;
+    The Computer never Hits if it has more that 17;
+}
+
 List of Games {
 
-    BlackJack;
     Quatro Em Linha;
     Jogo da Forca;
     Galo Cervejeiro;

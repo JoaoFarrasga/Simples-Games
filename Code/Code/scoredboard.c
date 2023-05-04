@@ -294,7 +294,7 @@ void scoreGameAdd(int numberGame, char* gamerName, int gamerScore) {
             
             if (aux->score < newScoreboard->score) {
             
-            aux->score = newScoreboard->score;
+            aux->score = aux->score + newScoreboard->score;
 
             } 
 
