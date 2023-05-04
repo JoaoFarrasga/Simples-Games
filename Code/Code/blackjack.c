@@ -10,6 +10,12 @@
 
 #pragma region Code
 
+/**
+ * @brief Shuffles the Deck of Cards
+ * 
+ * @param [in] Cards The Deck that needs Shuffling
+ * @param [out] Nothing
+ */
 void shuffle(int* cards) {
 
     srand(time(NULL));
@@ -26,6 +32,12 @@ void shuffle(int* cards) {
 
 }
 
+/**
+ * @brief Prints a Card in the Console
+ * 
+ * @param [in] Card The Card that needs to be Printed
+ * @param [out] Nothing
+*/
 void printCard(int card) {
 
     const char* suits[] = {"Hearts", "Diamonds", "Clubs", "Spades"};
@@ -38,6 +50,12 @@ void printCard(int card) {
 
 }
 
+/**
+ * @brief Gives the Points of the Card
+ * 
+ * @param [in] Card The Card that the BlackJack needs the Points
+ * @param [out] Points The Points of the Card
+*/
 int pointCard(int card) {
 
     int value = card % 13 + 1;
@@ -54,6 +72,12 @@ int pointCard(int card) {
 
 }
 
+/**
+ * @brief The Game BlackJack
+ * 
+ * @param [in] Nothing
+ * @param [out] Nothing
+*/
 void blackjack() {
 
     int computerPoints, playerPoints, choice;
