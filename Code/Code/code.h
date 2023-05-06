@@ -109,6 +109,8 @@ void playerVScomputer();
 
 void clearBoardConnectFour();
 void printBoardConnectFour();
+void makeMove(int player, int col);
+int checkWinConnectFour(int player);
 void connectfour();
 
 #pragma endregion
