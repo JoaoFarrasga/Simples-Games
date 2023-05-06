@@ -40,9 +40,14 @@ Change BlackJack to have the real rules {
     The Computer never Hits if it has more that 17;
 }
 
+Change Connect Four {
+
+    Still some bugs in the makeMove();
+    Need to add Given Points;
+}
+
 List of Games {
 
-    Quatro Em Linha;
     Jogo da Forca;
     Galo Cervejeiro;
     MasterMind;
