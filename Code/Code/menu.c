@@ -67,9 +67,10 @@ void selectGame() {
            "\t Enter 2 - Guess the Card\n"
            "\t Enter 3 - Black Jack\n"
            "\t Enter 4 - Tic Tac Toe\n"
+           "\t Enter 5 - Four In A Row\n"
            "\n\t Enter 0 - Back\n");
     
-    int choice = getChoice(0, 4);
+    int choice = getChoice(0, 5);
     switch (choice)
     {
     case 1:
@@ -86,6 +87,10 @@ void selectGame() {
 
     case 4:
         tictactoe();
+        break;
+
+    case 5:
+        connectfour();
         break;
 
     case 0:
@@ -112,9 +117,10 @@ void scoreboardMenu() {
            "\t Enter 2 - Guess the Card\n"
            "\t Enter 3 - Black Jack\n"
            "\t Enter 4 - Tic Tac Toe\n"
+           "\t Enter 5 - Four In A Row\n"
            "\n\t Enter 0 - Back\n");
 
-    int choice = getChoice(0, 4);
+    int choice = getChoice(0, 5);
     switch (choice) {
         case 1:
             scoreboardPrint(choice);
@@ -129,6 +135,10 @@ void scoreboardMenu() {
             break;
 
         case 4:
+            scoreboardPrint(choice);
+            break;
+
+        case 5:
             scoreboardPrint(choice);
             break;
 
@@ -173,11 +183,15 @@ void playAgainMenu(int numberGame) {
             break;
 
         case 3:
-            //blackjack();
-            break;
+            blackjack();
+            break;   
 
         case 4:
             tictactoe();
+            break;
+
+        case 5:
+            connectfour();
             break;
 
         default:
@@ -211,6 +225,8 @@ void endGameMenu(int numberGame, int points) {
     char* name = getName();
 
     system("cls");
+
+    printf("You played Game %d, won %d points, and you are %2s", numberGame, points, name);
 
     scoreGameAdd(numberGame, name, points);
     playAgainMenu(numberGame);

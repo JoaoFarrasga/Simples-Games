@@ -291,13 +291,8 @@ void scoreGameAdd(int numberGame, char* gamerName, int gamerScore) {
     while (aux != NULL) {
 
         if (aux->game == newScoreboard->game && (strcmp(aux->name, newScoreboard->name) == 0)) {
-            
-            if (aux->score < newScoreboard->score) {
-            
+
             aux->score = aux->score + newScoreboard->score;
-
-            } 
-
             return;
 
         }

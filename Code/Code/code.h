@@ -105,4 +105,12 @@ void playerVScomputer();
 
 #pragma endregion
 
+#pragma region FourInARow
+
+void clearBoardConnectFour();
+void printBoardConnectFour();
+void connectfour();
+
+#pragma endregion
+
 #pragma endregion

@@ -1,3 +1,8 @@
+Found Bugs That need to be Corrected {
+
+    When the ScoreBoard is changed and the game continuous, the ScoreBoard doesn't Order itself;
+}
+
 Get a Stronger Bot for Tic Tac Toe {
 
     Check if possible win play;
