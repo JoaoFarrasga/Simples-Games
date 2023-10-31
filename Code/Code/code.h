@@ -10,11 +10,16 @@
 #pragma region Structs
 
 typedef struct Scoreboard {
-    int game;
     char name[4];
     int score;
     struct Scoreboard *next;
 } Scoreboard;
+
+typedef struct Game {
+    int game;
+    Scoreboard *scoreboard;
+    struct Game *next;
+} Game;
 
 typedef struct ScoreGlobal {
     char name[4];
@@ -39,28 +44,28 @@ void globalScoreMenu();
 
 #pragma region Scoreboard
 
-void scoreboardRead();
-void scoreboardWrite();
-void scoreboardPrint(int numberGame);
-Scoreboard* scoreboardAdd(int numberGame, char* gamerName, int gamerScore);
-void scoreboardInsert(Scoreboard* newScoreboard);
-void scoreboardReversed();
-void scoreGameAdd(int numberGame, char* gamerName, int gamerScore);
-int scoreGlobal(char* gamerName);
-void scoreGlobalRead();
+void ScoreboardRead();
+void ScoreboardWrite();
+Game* GameAdd(int numberGame);
+void GameInsert(Game* newGame);
+Scoreboard* ScoreboardAdd(char* name, int score);
+void ScoreboardInsert(Game* game, Scoreboard* newScoreboard);
+void ScoreboardPrint(int numberGame);
+int ScoreExists(int numberGame, char* name);
+void ScoreGameAdd(int numberGame, char* name, int score);
+int GiveScoreGlobal(char* name);
+void ScoreGlobalReadInitial();
 
 #pragma endregion
 
 #pragma region Global Score
 
-void globalRead(Scoreboard* header);
-void globalPrint();
-void globalPrintOne();
-ScoreGlobal* globalAdd(char* gamerName, int globalScore);
-int scoreExists(int numberGame, char* gamerName);
-void globalInsert(ScoreGlobal* newGlobal);
-void globalReversed();
-int globalExists(char* gamerName);
+void ScoreGlobalRead(Game* header);
+int GlobalExists(char* name);
+ScoreGlobal* GlobalAdd(char* name, int scoreGlobal);
+void GlobalInsert(ScoreGlobal* newScoreGlobal);
+void GlobalPrint();
+void GlobalPrintOne();
 
 #pragma endregion
 

@@ -21,7 +21,7 @@
  */
 void mainMenu() {
 
-    scoreboardWrite();
+    ScoreboardWrite();
 
     printf("\t\t Main Menu \n\n"
            "\t Enter 1 - Select Game\n"
@@ -131,23 +131,23 @@ void scoreboardMenu() {
     int choice = getChoice(0, 5);
     switch (choice) {
         case 1:
-            scoreboardPrint(choice);
+            ScoreboardPrint(choice);
             break;
         
         case 2:
-            scoreboardPrint(choice);
+            ScoreboardPrint(choice);
             break;
 
         case 3:
-            scoreboardPrint(choice);
+            ScoreboardPrint(choice);
             break;
 
         case 4:
-            scoreboardPrint(choice);
+            ScoreboardPrint(choice);
             break;
 
         case 5:
-            scoreboardPrint(choice);
+            ScoreboardPrint(choice);
             break;
 
         case 0:
@@ -236,7 +236,7 @@ void endGameMenu(int numberGame, int points) {
 
     printf("You played Game %d, won %d points, and you are %2s", numberGame, points, name);
 
-    scoreGameAdd(numberGame, name, points);
+    ScoreGameAdd(numberGame, name, points);
     playAgainMenu(numberGame);
 
 }
@@ -255,13 +255,13 @@ void endGameMenuDouble(int numberGame, int wonPoints, int losePoints, int wonPla
 
     printf("\t\t Player %d won the game receiving %d Points\n\n", wonPlayer, wonPoints);
     char* wonName = getName();
-    scoreGameAdd(numberGame, wonName, wonPoints);
+    ScoreGameAdd(numberGame, wonName, wonPoints);
 
     system("cls");
 
     printf("\t\t Player %d lost the game losing %d Points\n\n", losePlayer, losePoints);
     char* loseName = getName();
-    scoreGameAdd(numberGame, loseName, losePoints);
+    ScoreGameAdd(numberGame, loseName, losePoints);
 
     playAgainMenu(numberGame);
 
@@ -277,7 +277,7 @@ void globalScoreMenu() {
 
     system("cls");
 
-    scoreGlobalRead();
+    ScoreGlobalReadInitial();
 
     printf("\t\tGlobal Score\n\n"
            "\t Enter 1 - Your Global Score\n"
@@ -287,11 +287,11 @@ void globalScoreMenu() {
     int choice = getChoice(0, 2);
     switch (choice) {
         case 1:
-            globalPrintOne();
+            GlobalPrintOne();
             break;
 
         case 2:
-            globalPrint();
+            GlobalPrint();
             break;
 
         case 0:

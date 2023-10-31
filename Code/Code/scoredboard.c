@@ -11,337 +11,222 @@
 
 #pragma region Code
 
-Scoreboard* header = NULL;
-int scoreCount = 0;
+Game* header = NULL;
 
-/**
- * @brief It reads the File and puts everything in the Header
- * 
- * @param [in] Nothing
- * @param [out] Nothing
- */
-void scoreboardRead() {
-
-    int score, game;
+void ScoreboardRead() {
+    int game, score;
     char name[4];
-    FILE *file;
-    
-    struct Scoreboard *res = NULL;
-
-    file = fopen("scoreboard.txt", "r");
+    FILE* file = fopen("scoreboard.txt", "r");
 
     if (file == NULL) {
         printf("Sorry but the Scoreboard is not Working right Now\n\n");
+        return;
     }
-
-    header == NULL;
 
     while (fscanf(file, "%d %3s %d", &game, name, &score) == 3) {
+        Game* currentGame = header;
 
-        int check = scoreExists(game, name);
-
-        if (check == 0) {
-
-            res = scoreboardAdd(game, name, score);
-            scoreboardInsert(res);
-
-            scoreCount++;
-
+        while (currentGame != NULL && currentGame->game != game) {
+            currentGame = currentGame->next;
         }
 
-        if (fgetc(file) == '\n') {
-
-            continue;
-
+        if (currentGame == NULL) {
+            currentGame = GameAdd(game);
+            GameInsert(currentGame);
         }
 
-    }
+        if (ScoreExists(currentGame->game, name) == 0) {
+            Scoreboard* newScoreboard = ScoreboardAdd(name, score);
+            ScoreboardInsert(currentGame, newScoreboard);
+        }
 
-    scoreboardReversed();
-
-}
-
-/**
- * @brief It prints the Linked List in the File
- * 
- * @param [in] Nothing
- * @param [out] Nothing
- */
-void scoreboardWrite() {
-
-    FILE *file;
-
-    file = fopen("scoreboard.txt", "w");
-
-    if (file == NULL) {
-        printf("Sorry but the Scoreboard is not Working right Now");
-    }
-
-    Scoreboard* node = header;
-
-    while (node) {
-        
-        fprintf(file, "%d %s %d\n", node->game, node->name, node->score);
-        node = node->next;
-
+        if (fgetc(file) == '\n') continue;
     }
 
     fclose(file);
-
 }
 
-/**
- * @brief Scoreboard Print, after given a Number it prints the Users with Scores on that Games
- * 
- * @param [in] Game The Number of the Game that the User choose to see
- * @param [out] Nothing 
- */
-void scoreboardPrint(int numberGame) {
+void ScoreboardWrite() {
+    FILE* file = fopen("scoreboard.txt", "w");
 
-    int max = 0;
-    Scoreboard* node = header;
+    if (file == NULL) {
+        printf("Sorry but the Scoreboard is not Working right Now\n\n");
+        return;
+    }
 
-    printf("\t\tScoreboard \n\n");
+    Game* currentGame = header;
+    while (currentGame != NULL) {
+        Scoreboard* scoreboard = currentGame->scoreboard;
+        while (scoreboard != NULL) {
+            fprintf(file, "%d %s %d\n", currentGame->game, scoreboard->name, scoreboard->score);
+            scoreboard = scoreboard->next;
+        }
+        currentGame = currentGame->next;
+    }
 
-    while (node != NULL) {
+    fclose(file);
+}
 
-        if (node->game == numberGame) {
+Game* GameAdd(int numberGame) {
+    Game* newGame = (Game*)malloc(sizeof(Game));
+    if (newGame == NULL) {
+        printf("Memory allocation failed.");
+        return NULL;
+    }
 
-            printf("Place: %d\t", max + 1);
-            printf("Name: %s\t", node->name);
-            printf("Score: (%d)\n", node->score);
+    newGame->game = numberGame;
+    newGame->scoreboard = NULL;
+    newGame->next = NULL;
 
-            max++;
+    return newGame;
+}
 
+void GameInsert(Game* newGame) {
+    if (header == NULL) {
+        header = newGame;
+    } else {
+        Game* aux = header;
+        Game* auxPrev = NULL;
+
+        while (aux && aux->game > newGame->game){
+            auxPrev = aux;
+            aux = aux->next;
         }
 
+        if (auxPrev == NULL) {
+            newGame->next = header;
+            header = newGame;
+        } else {
+            auxPrev->next = newGame;
+            newGame->next = aux;
+        }
+    }
+}
+
+Scoreboard* ScoreboardAdd(char* name, int score) {
+    Scoreboard* newScoreboard = (Scoreboard*)malloc(sizeof(Scoreboard));
+    if (newScoreboard == NULL) {
+        printf("Memory allocation failed.");
+        return NULL;
+    }
+
+    strcpy(newScoreboard->name, name);
+    newScoreboard->score = score;
+    newScoreboard->next = NULL;
+
+    return newScoreboard;
+}
+
+void ScoreboardInsert(Game* game, Scoreboard* newScoreboard) {
+    if (game->scoreboard == NULL) {
+        game->scoreboard = newScoreboard;
+    } else {
+        Scoreboard* aux = game->scoreboard;
+        Scoreboard* auxPrev = NULL;
+
+        while (aux && aux->score < newScoreboard->score) {
+            auxPrev = aux;
+            aux = aux->next;
+        }
+
+        if (auxPrev == NULL) {
+            newScoreboard->next = game->scoreboard;
+            game->scoreboard = newScoreboard;
+        } else {
+            auxPrev->next = newScoreboard;
+            newScoreboard->next = aux;
+        }
+    }
+}
+
+void ScoreboardPrint(int numberGame) {
+    
+    Game* currentGame = header;
+
+    while (header != NULL && header->game != numberGame) {
+        currentGame = currentGame->next;
+    }
+
+    Scoreboard* node = currentGame->scoreboard;
+
+    printf("\t\tScoreboard\n\n");
+    int max = 0;
+
+    while (node != NULL) {
+        printf("Place: %d\tName: %s\tScore: %d\n", max + 1, node->name, node->score);
         node = node->next;
-
+        max++;
         if (max == 10) {
-
             break;
-
-        } 
-
+        }
     }
 
     while (max < 10) {
-
         printf("Place: %d\tName: XXX\tScore: (0)\n", max + 1);
         max++;
-
     }
 
     printf("\n\t\tEnter 0 - Back\n");
     int choice = getChoice(0, 0);
     if (choice == 0) {
-
         scoreboardMenu();
-
     }
-
 }
 
-/**
- * @brief Creates a Scoreboard with the things Added
- * 
- * @param [in] numberGame Number Given to put in the newScoreboard->game
- * @param [in] gamerName Name Given to put in the newScoreboard->name
- * @param [in] gamerScore Score Given to put in the newScoreboard->score
- * @param [out] Scoreboard Scoreboard with the things added 
- */
-Scoreboard* scoreboardAdd(int numberGame, char* gamerName, int gamerScore) {
-
-    Scoreboard* newScoreboard = (Scoreboard*)malloc(sizeof(Scoreboard));
-
-    if (newScoreboard == NULL) {
-
-        printf("Sorry but the Scoreboard is not Working right Now");
-        return NULL;
-        
+int ScoreExists(int numberGame, char* name) {
+    Game* currentGame = header;
+    while (currentGame != NULL && currentGame->game != numberGame) {
+        currentGame = currentGame->next;
     }
 
-    newScoreboard->game = numberGame;
-    strcpy(newScoreboard->name, gamerName);
-    newScoreboard->score = gamerScore;
-    newScoreboard->next = NULL;
-
-    return newScoreboard;
-
-}
-
-/**
- * @brief Score Exists check if there is already a Scoreboard with that name
- * 
- * @param [in] Game Game to see if it exists
- * @param [in] Name Name to see if it exists 
- * @param [out] Int 0 == False, 1 == True 
- */
-int scoreExists(int numberGame, char* gamerName) {
-
-    if (header == NULL) {
-
-        return 0;
-
-    }
-
-    Scoreboard* aux = header;
-
-    while (aux != NULL) {
-
-        if (aux->game == numberGame) {
-
-            if (strcmp(aux->name, gamerName) == 0) {
-
-                return 1;
-
-            }
-
-        }
-
-        aux = aux->next;
-
-    }
+    while (currentGame->scoreboard != NULL) {
+        if (strcmp(currentGame->scoreboard->name, name) == 0) return 1;
+        currentGame->scoreboard = currentGame->scoreboard->next;
+    }   
 
     return 0;
-
 }
 
-/**
- * @brief Inserts a Scoreboard in the Header
- * 
- * @param [out] newScoreboard The newScoreboard to add to the Header
- */
-void scoreboardInsert(Scoreboard* newScoreboard) {
+void ScoreGameAdd(int numberGame, char* name, int score) {
 
-    if (header == NULL) {
-
-        header = newScoreboard;
-
-    } else {
-
-        Scoreboard* aux = header;
-        Scoreboard* auxPrev = NULL;
-
-        while (aux && aux->score < newScoreboard->score) {
-
-            auxPrev = aux;
-            aux = aux->next;
-
-        }
-
-        if (auxPrev == NULL) {
-
-            newScoreboard->next = header;
-            header = newScoreboard;
-
-        } else {
-
-            auxPrev->next = newScoreboard;
-            newScoreboard->next = aux;
-
-        }
-
+    Game* currentGame = header;
+    while (currentGame != NULL && currentGame->game != numberGame) {
+        currentGame = currentGame->next;
     }
 
+    if (currentGame == NULL) {
+        currentGame = GameAdd(numberGame);
+        GameInsert(currentGame);
+    }
+
+    Scoreboard* newScoreboard = ScoreboardAdd(name, score);
+    ScoreboardInsert(currentGame, newScoreboard);
 }
 
-/**
- * @brief Scoreboard Reversed is used to reverse a List
- * 
- * @param [in] Nothing
- * @param [out] Nothing
- */
-void scoreboardReversed() {
-
-    if (header == NULL) {
-
-        printf("Sorry but the Scoreboard is not Working right Now");
-
-    }
-
-    Scoreboard* node = header;
-    Scoreboard* newHeader = NULL;
-
-    while (node != NULL) {
-
-        Scoreboard* newNode = scoreboardAdd(node->game, node->name, node->score);
-        newNode->next = newHeader;
-        newHeader = newNode;
-        node = node->next;
-
-    }
-
-    header = newHeader;
-
-}
-
-/**
- * @brief Score Game Add is a function used in the Games to add in the Header
- * 
- * @param [in] numberGame Number Given to put in the newScoreboard->game
- * @param [in] gamerName Name Given to put in the newScoreboard->name
- * @param [in] gamerScore Score Given to put in the newScoreboard->score
- */
-void scoreGameAdd(int numberGame, char* gamerName, int gamerScore) {
-
-    Scoreboard* newScoreboard = scoreboardAdd(numberGame, gamerName, gamerScore);
-    Scoreboard* aux = header;
-
-    while (aux != NULL) {
-
-        if (aux->game == newScoreboard->game && (strcmp(aux->name, newScoreboard->name) == 0)) {
-
-            aux->score = aux->score + newScoreboard->score;
-            return;
-
-        }
-
-        aux = aux->next;
-
-    }
-
-    scoreboardInsert(newScoreboard);
-
-}
-
-/**
- * @brief Score Global is a function that calculates the Global Score
- * 
- * @param [in] Name The Name of the User to give Global Score 
- * @param [out] GlobalScore The Global Score of the User
- */
-int scoreGlobal(char* gamerName) {
+int GiveScoreGlobal(char* name) {
 
     int scoreGlobal = 0;
-    Scoreboard* aux = header;
+    Game* currentGame = header;
 
-    while (aux != NULL) {
+    while (currentGame != NULL) {
+        Scoreboard* currentScoreboard = currentGame->scoreboard;
+        
+        while (currentScoreboard!= NULL) {
+            if(strcmp(currentScoreboard->name, name) == 0) {
+                scoreGlobal = scoreGlobal + currentScoreboard->score;
+            }
 
-        if (strcmp(aux->name, gamerName) == 0) {
-
-            scoreGlobal = scoreGlobal + aux->score;
-
+            currentScoreboard = currentScoreboard->next;
         }
 
-        aux = aux->next;
-
+        currentGame = currentGame->next;
     }
 
     return scoreGlobal;
-
 }
 
-/**
- * @brief Starts Global Score Read
- * 
- * @param [in] Nothing
- * @param [out] Nothing
- */
-void scoreGlobalRead() {
-
-    globalRead(header);
-
+void ScoreGlobalReadInitial() {
+    ScoreGlobalRead(header);
 }
 
 #pragma endregion

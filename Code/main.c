@@ -14,7 +14,7 @@ void main() {
 
     system("cls");
 
-    scoreboardRead();
+    ScoreboardRead();
 
     mainMenu();
 
