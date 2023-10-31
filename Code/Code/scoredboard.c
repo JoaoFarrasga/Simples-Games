@@ -55,9 +55,9 @@ void ScoreboardWrite() {
     }
 
     Game* currentGame = header;
-    while (currentGame != NULL) {
+    while (currentGame) {
         Scoreboard* scoreboard = currentGame->scoreboard;
-        while (scoreboard != NULL) {
+        while (scoreboard) {
             fprintf(file, "%d %s %d\n", currentGame->game, scoreboard->name, scoreboard->score);
             scoreboard = scoreboard->next;
         }
@@ -124,7 +124,7 @@ void ScoreboardInsert(Game* game, Scoreboard* newScoreboard) {
         Scoreboard* aux = game->scoreboard;
         Scoreboard* auxPrev = NULL;
 
-        while (aux && aux->score < newScoreboard->score) {
+        while (aux && aux->score > newScoreboard->score) {
             auxPrev = aux;
             aux = aux->next;
         }
@@ -140,10 +140,10 @@ void ScoreboardInsert(Game* game, Scoreboard* newScoreboard) {
 }
 
 void ScoreboardPrint(int numberGame) {
-    
+
     Game* currentGame = header;
 
-    while (header != NULL && header->game != numberGame) {
+    while (currentGame != NULL && currentGame->game != numberGame) {
         currentGame = currentGame->next;
     }
 
@@ -179,9 +179,10 @@ int ScoreExists(int numberGame, char* name) {
         currentGame = currentGame->next;
     }
 
-    while (currentGame->scoreboard != NULL) {
-        if (strcmp(currentGame->scoreboard->name, name) == 0) return 1;
-        currentGame->scoreboard = currentGame->scoreboard->next;
+    Scoreboard* node = currentGame->scoreboard;
+    while (node) {
+        if (strcmp(node->name, name) == 0) return 1;
+        node = node->next;
     }   
 
     return 0;
