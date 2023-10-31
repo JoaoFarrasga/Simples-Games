@@ -69,7 +69,7 @@ int globalExists(char* gamerName);
 int getChoice(int min, int max);
 int randomInt(int min, int max);
 char* getName();
-char* capitalize(char name[4]);
+//char* capitalize(char name[4]);
 
 #pragma endregion
 
@@ -114,6 +114,15 @@ int checkWinConnectFour(int player);
 void connectfour();
 void playerVSplayerConnectFour();
 void playerVScomputerConnectFour();
+
+#pragma endregion
+
+#pragma region MasterMind
+
+char** computerSymbols();
+char** playerSymbols();
+int checkSymbols(char** playerSymbols, char** computerSymbols);
+void masterMind();
 
 #pragma endregion
 

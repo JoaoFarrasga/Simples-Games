@@ -67,10 +67,14 @@ void selectGame() {
            "\t Enter 2 - Guess the Card\n"
            "\t Enter 3 - Black Jack\n"
            "\t Enter 4 - Tic Tac Toe\n"
-           "\t Enter 5 - Four In A Row\n"
+           "\t Enter 5 - HangMan *Not Working*\n"
+           "\t Enter 6 - Four In A Row\n"
+           "\t Enter 7 - Drunk Tic Tac Toe *Not Working*\n"
+           "\t Enter 8 - Master Mind\n"
+           "\t Enter 9 - Mine Sweeper *Not Working*\n"
            "\n\t Enter 0 - Back\n");
     
-    int choice = getChoice(0, 5);
+    int choice = getChoice(0, 9);
     switch (choice)
     {
     case 1:
@@ -89,8 +93,12 @@ void selectGame() {
         tictactoe();
         break;
 
-    case 5:
+    case 6:
         connectfour();
+        break;
+
+    case 8:
+        masterMind();
         break;
 
     case 0:

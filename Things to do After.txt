@@ -3,15 +3,18 @@ Found Bugs That need to be Corrected {
     When the ScoreBoard is changed if the game continuous, the ScoreBoard doesn't Order itself;
 }
 
-Get a Stronger Bot for Tic Tac Toe {
+Tic Tac Toe {
 
-    Check if possible win play;
-    Check if possible block play;
-    Check if center available play;
-    Check if corner available {
-        Radom corner play;
+    Add Stronger Bot{
+
+        Check if possible win play;
+        Check if possible block play;
+        Check if center available play;
+        Check if corner available {
+            Radom corner play;
+        }
+        Play random;
     }
-    Play random;
 }
 
 Add one more Struct to the Scoreboard {
@@ -33,29 +36,30 @@ Add one more Struct to the Scoreboard {
     To make Files and Scores Easy to read;
 }
 
-Change BlackJack to have the real rules {
+BlackJack{
 
     Ace is 1 or 11;
     Gives two cards to the Computer in the Begining;
     The Computer never Hits if it has more that 17;
 }
 
-Change Connect Four {
+Connect Four {
 
-    Done - Still some bugs in the makeMove();
-    Done - Document the Connect Four;
     Need to add Given Points;
 
     Make the Bot Stronger;
 }
 
 MasterMind {
-
     Funtcions Needed {
-        computerMove();
-        playerMove();
-        checkIfPlayerMoveIsRight();
+        giveScore() {
+            Every Time the Player is rigth for the First Time gives 20 points;
+            Every Time the Player is wrong for the First Time takes 5 points;
+            End of the Games gives the points earned;
+        };
     }
+
+    On Hold - Need to do the CPU part asked, don't know how though.
 }
 
 List of Games {
