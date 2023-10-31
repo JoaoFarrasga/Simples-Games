@@ -1,6 +1,6 @@
 Found Bugs That need to be Corrected {
 
-    When the ScoreBoard is changed and the game continuous, the ScoreBoard doesn't Order itself;
+    When the ScoreBoard is changed if the game continuous, the ScoreBoard doesn't Order itself;
 }
 
 Get a Stronger Bot for Tic Tac Toe {
@@ -42,8 +42,20 @@ Change BlackJack to have the real rules {
 
 Change Connect Four {
 
-    Still some bugs in the makeMove();
+    Done - Still some bugs in the makeMove();
+    Done - Document the Connect Four;
     Need to add Given Points;
+
+    Make the Bot Stronger;
+}
+
+MasterMind {
+
+    Funtcions Needed {
+        computerMove();
+        playerMove();
+        checkIfPlayerMoveIsRight();
+    }
 }
 
 List of Games {
@@ -51,5 +63,4 @@ List of Games {
     Jogo da Forca;
     Galo Cervejeiro;
     MasterMind;
-    Minesweeper;
 }
