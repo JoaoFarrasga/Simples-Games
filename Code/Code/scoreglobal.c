@@ -20,24 +20,20 @@ void ScoreGlobalRead(Game* header) {
     if (header == NULL) {
         printf("Sorry but the Global Score is not Working Right Now");
     }
-
     globalHeader = NULL;
 
     Game* currentGame = header;
-
     while (currentGame != NULL) {
         Scoreboard* currentScoreboard = currentGame->scoreboard;
-
         while (currentScoreboard != NULL) {
-
             if (GlobalExists(currentScoreboard->name) == 0) {
-
                 globalScore = GiveScoreGlobal(currentScoreboard->name);
 
                 ScoreGlobal* newScoreGlobal = GlobalAdd(currentScoreboard->name, globalScore);
                 GlobalInsert(newScoreGlobal);
             }
 
+            currentScoreboard = currentScoreboard->next;
         }
 
         currentGame = currentGame->next;
@@ -84,7 +80,7 @@ void GlobalInsert(ScoreGlobal* newScoreGlobal) {
         ScoreGlobal* aux = globalHeader;
         ScoreGlobal* auxPrev = NULL;
 
-        while (aux && aux->score < newScoreGlobal->score) {
+        while (aux && aux->score > newScoreGlobal->score) {
             auxPrev = aux;
             aux = aux->next;
         }
@@ -104,7 +100,7 @@ void GlobalPrint() {
     ScoreGlobal* node = globalHeader;
 
     while (node != NULL) {
-        printf("Place: %d, Name: %s, Score: %d\n", max + 1, node->score, node);
+        printf("Place: %d\tName: %s\tScore: %d\n", max + 1, node->name, node->score);
     
         max++;
         node = node->next;
@@ -115,7 +111,7 @@ void GlobalPrint() {
     }
 
     while (max < 10) {
-        printf("Place: %d, Name: XXX, Score: (0)", max + 1);
+        printf("Place: %d\tName: XXX\tScore: (0)\n", max + 1);
         max++;
     }
 
