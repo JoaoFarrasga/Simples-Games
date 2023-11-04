@@ -13,6 +13,12 @@
 
 ScoreGlobal* globalHeader = NULL;
 
+/**
+ * @brief Initialize the Global Score of the Players.
+ * 
+ * @param [in] GameHeader The Main List of the Games.
+ * @param [out] Nothing
+*/
 void ScoreGlobalRead(Game* header) {
 
     int globalScore;
@@ -40,6 +46,12 @@ void ScoreGlobalRead(Game* header) {
     }
 }
 
+/**
+ * @brief Checks the If the Global Score of a Player Already Exists in the Global Score List.
+ * 
+ * @param [in] Name The Name of the Player.
+ * @param [out] Check 1 if the Global Score of a Player Already Exists in the Global Score List, 0 otherwise.
+*/
 int GlobalExists(char* name) {
     
     if (globalHeader == NULL) {
@@ -58,6 +70,13 @@ int GlobalExists(char* name) {
     return 0;
 }
 
+/**
+ * @brief Creates a Global Score.
+ * 
+ * @param [in] Name The Name of the Player.
+ * @param [in] Score The Global Score of the Player.
+ * @param [out] NewScoreGlobal The Global Score of the Player.
+*/
 ScoreGlobal* GlobalAdd(char* name, int scoreGlobal) {
     ScoreGlobal* newScoreGlobal = (ScoreGlobal*)malloc(sizeof(ScoreGlobal));
 
@@ -73,6 +92,12 @@ ScoreGlobal* GlobalAdd(char* name, int scoreGlobal) {
     return newScoreGlobal;
 }
 
+/**
+ * @brief Inserts a Global Score in the Global Score List.
+ * 
+ * @param [in] NewScoreGlobal Adds the New Score Global to the Global Score List.
+ * @param [out] Nothing
+*/
 void GlobalInsert(ScoreGlobal* newScoreGlobal) {
     if (globalHeader == NULL) {
         globalHeader = newScoreGlobal;
@@ -95,6 +120,12 @@ void GlobalInsert(ScoreGlobal* newScoreGlobal) {
     }
 }
 
+/**
+ * @brief Prints the Global Score List.
+ * 
+ * @param [in] Nothing
+ * @param [out] Nothing
+*/
 void GlobalPrint() {
     int max = 0;
     ScoreGlobal* node = globalHeader;
@@ -122,6 +153,12 @@ void GlobalPrint() {
     }
 }
 
+/**
+ * @brief Prints the Global Score of a Player.
+ * 
+ * @param [in] Nothing
+ * @param [out] Nothing
+*/
 void GlobalPrintOne() {
     char* name = getName();
     int globalScore = GiveScoreGlobal(name);

@@ -13,6 +13,12 @@
 
 Game* header = NULL;
 
+/**
+ * @brief ScoreBoard Read is the Function that reads the File of the ScoreBoard, and puts the Data into the Structs.
+ * 
+ * @param [in] Nothing
+ * @param [out] Nothing
+*/
 void ScoreboardRead() {
     int game, score;
     char name[4];
@@ -46,6 +52,12 @@ void ScoreboardRead() {
     fclose(file);
 }
 
+/**
+ * @brief ScoreBoard Write is the Function that writes the Data of the ScoreBoard into the File.
+ * 
+ * @param [in] Nothing
+ * @param [out] Nothing
+*/
 void ScoreboardWrite() {
     FILE* file = fopen("scoreboard.txt", "w");
 
@@ -67,6 +79,12 @@ void ScoreboardWrite() {
     fclose(file);
 }
 
+/**
+ * @brief GameAdd is the Function that creates a new Game.
+ * 
+ * @param [in] NumberGame Is The Number of the Game that needs to be created.
+ * @param [out] NewGame The Game that was Created.
+*/
 Game* GameAdd(int numberGame) {
     Game* newGame = (Game*)malloc(sizeof(Game));
     if (newGame == NULL) {
@@ -81,6 +99,12 @@ Game* GameAdd(int numberGame) {
     return newGame;
 }
 
+/**
+ * @brief GameInsert is the Function that inserts a new Game into the Game List.
+ * 
+ * @param [in] NewGame The Game that needs to be inserted.
+ * @param [out] Nothing
+*/
 void GameInsert(Game* newGame) {
     if (header == NULL) {
         header = newGame;
@@ -103,6 +127,14 @@ void GameInsert(Game* newGame) {
     }
 }
 
+
+/**
+ * @brief ScoreboardAdd is the Function that creates a new ScoreBoard.
+ * 
+ * @param [in] Name Is The Name of the Player of the Score that needs to be created.
+ * @param [in] Score Is The Score of the Player of the Score that needs to be created
+ * @param [out] NewScoreBoard The ScoreBoard that was Created.
+*/
 Scoreboard* ScoreboardAdd(char* name, int score) {
     Scoreboard* newScoreboard = (Scoreboard*)malloc(sizeof(Scoreboard));
     if (newScoreboard == NULL) {
@@ -117,6 +149,13 @@ Scoreboard* ScoreboardAdd(char* name, int score) {
     return newScoreboard;
 }
 
+/**
+ * @brief ScoreboardInsert is the Function that inserts a new ScoreBoard into the List.
+ * 
+ * @param [in] Game The Game of the ScoreBoard that needs to be inserted.
+ * @param [in] NewScoreBoard The ScoreBoard that needs to be inserted.
+ * @param [out] Nothing
+*/
 void ScoreboardInsert(Game* game, Scoreboard* newScoreboard) {
     if (game->scoreboard == NULL) {
         game->scoreboard = newScoreboard;
@@ -139,6 +178,12 @@ void ScoreboardInsert(Game* game, Scoreboard* newScoreboard) {
     }
 }
 
+/**
+ * @brief ScoreBoard Print is the Function that Prints the Data of the Scoreboard.
+ * 
+ * @param [in] NumberGame The Number of the Game that has ScoreBoard that needs to be printed.
+ * @param [out] Nothing
+*/
 void ScoreboardPrint(int numberGame) {
 
     Game* currentGame = header;
@@ -173,6 +218,13 @@ void ScoreboardPrint(int numberGame) {
     }
 }
 
+/**
+ * @brief Score Exists is the Function that Checks if the Score of a Player Already Exists.
+ * 
+ * @param [in] NumberGame The Number of the Game that has the ScoreBoard that needs to be checked.
+ * @param [in] Name Is The Name of the Player that needs to be checked.
+ * @param [out] Check 1 If the Score of the Player Exists, 0 If the the Score of the Player does not Exists.
+*/
 int ScoreExists(int numberGame, char* name) {
     Game* currentGame = header;
     while (currentGame != NULL && currentGame->game != numberGame) {
@@ -188,6 +240,14 @@ int ScoreExists(int numberGame, char* name) {
     return 0;
 }
 
+/**
+ * @breif Score Game Add is the Function that Adds a new Score to the ScoreBoard of a Game.
+ * 
+ * @param [in] NumberGame The Number of the Game that has the ScoreBoard that will be used.
+ * @param [in] Name Is The Name of the Player that will be used.
+ * @param [in] Score Is The Score of the Player that will be used.
+ * @param [out] Nothing
+*/
 void ScoreGameAdd(int numberGame, char* name, int score) {
 
     Game* currentGame = header;
@@ -204,6 +264,12 @@ void ScoreGameAdd(int numberGame, char* name, int score) {
     ScoreboardInsert(currentGame, newScoreboard);
 }
 
+/**
+ * @brief Give ScoreGlobal is the Function that Gives the Global Score of a Player.
+ * 
+ * @param [in] Name The name of the Player that needs the Global Score.
+ * @param [out] GlobalScore The Global Score of the Player wanted.
+*/
 int GiveScoreGlobal(char* name) {
 
     int scoreGlobal = 0;
@@ -226,6 +292,12 @@ int GiveScoreGlobal(char* name) {
     return scoreGlobal;
 }
 
+/**
+ * @brief ScoreGlobal Read Initial is the Function that Initializes the Global Score Functions.
+ * 
+ * @param [in] Nothing
+ * @param [out] Nothing
+*/
 void ScoreGlobalReadInitial() {
     ScoreGlobalRead(header);
 }

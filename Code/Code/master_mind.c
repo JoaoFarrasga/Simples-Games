@@ -12,6 +12,12 @@
 
 #pragma region Code
 
+/**
+ * @brief Computer Symbols is the function that generates the Symbols for the MasterMind.
+ * 
+ * @param [in] Nothing
+ * @param [out] Nothing
+*/
 char** computerSymbols() {
 
     char* symbols[4] = {"Red", "Green", "Blue", "Yellow"};
@@ -28,6 +34,12 @@ char** computerSymbols() {
 
 }
 
+/**
+ * @brief Player Symbols is the function that aks the Symbols from the Player.
+ * 
+ * @param [in] Nothing
+ * @param [out] Nothing
+*/
 char** playerSymbols() {
 
     char* symbols[4] = {"Red", "Green", "Blue", "Yellow"};
@@ -43,6 +55,13 @@ char** playerSymbols() {
 
 }
 
+/**
+ * @brief Check Symbols is the function that checks the Symbols and sees if the game is Win or Lose.
+ * 
+ * @param [in] PlayerSymbos The Symbols of the Player.
+ * @param [in] ComputerSymbos The Symbols of the Computer.
+ * @param [out] Check If 1 the Player Wins if 2 the Player does not Win. 
+*/
 int checkSymbols(char** playerSymbols, char** computerSymbols) {
 
     int check = 0;
@@ -59,7 +78,12 @@ int checkSymbols(char** playerSymbols, char** computerSymbols) {
     printf("\n\n");
     return check == 4? 1 : 0;
 }
-
+/**
+ * @brief MasterMind is the main function of the MasterMind.
+ * 
+ * @param [in] Nothing
+ * @param [out] Nothing
+*/
 void masterMind() {
 
     char** symbolsComputer = computerSymbols();
