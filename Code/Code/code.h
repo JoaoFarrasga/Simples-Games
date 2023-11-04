@@ -74,7 +74,6 @@ void GlobalPrintOne();
 int getChoice(int min, int max);
 int randomInt(int min, int max);
 char* getName();
-//char* capitalize(char name[4]);
 
 #pragma endregion
 
@@ -107,6 +106,16 @@ void printBoard();
 int checkWin();
 void playerVSplayer();
 void playerVScomputer();
+
+#pragma endregion
+
+#pragma region HangMan
+
+char* RandomWord(char* words[], int length);
+int IsLetterInWord(char* word, char letter);
+int IsWordCorrect(char* word, char letters[]);
+void DisplayWord(char* word, char letters[]);
+void HangMan();
 
 #pragma endregion
 

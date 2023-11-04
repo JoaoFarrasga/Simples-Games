@@ -27,7 +27,7 @@ Connect Four {
 }
 
 MasterMind {
-    Funtcions Needed {
+    Functions Needed {
         giveScore() {
             Every Time the Player is rigth for the First Time gives 20 points;
             Every Time the Player is wrong for the First Time takes 5 points;
@@ -38,9 +38,23 @@ MasterMind {
     On Hold - Need to do the CPU part asked, don't know how though.
 }
 
+HangMan {
+    Functions Needed {
+        WordList();
+        SelectRandomWord();
+        DisplayWord() {
+            UpdateWord();
+            CheckWin();
+        }
+        TakeGuess();
+        IsLetterInWord();
+        DisplayHangMan();
+        HangMan();
+    }
+}
+
 List of Games {
 
-    Jogo da Forca;
     Galo Cervejeiro;
     MasterMind;
 }

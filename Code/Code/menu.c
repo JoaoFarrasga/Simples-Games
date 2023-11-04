@@ -67,7 +67,7 @@ void selectGame() {
            "\t Enter 2 - Guess the Card\n"
            "\t Enter 3 - Black Jack\n"
            "\t Enter 4 - Tic Tac Toe\n"
-           "\t Enter 5 - HangMan *Not Working*\n"
+           "\t Enter 5 - HangMan\n"
            "\t Enter 6 - Four In A Row\n"
            "\t Enter 7 - Drunk Tic Tac Toe *Not Working*\n"
            "\t Enter 8 - Master Mind\n"
@@ -91,6 +91,10 @@ void selectGame() {
 
     case 4:
         tictactoe();
+        break;
+
+    case 5:
+        HangMan();
         break;
 
     case 6:
