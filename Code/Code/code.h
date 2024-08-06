@@ -74,6 +74,8 @@ void GlobalPrintOne();
 int getChoice(int min, int max);
 int randomInt(int min, int max);
 char* getName();
+int getMax();
+int getMin();
 
 #pragma endregion
 
@@ -94,6 +96,7 @@ void guessCard();
 void shuffle(int* cards);
 void printCard(int card);
 int pointCard(int card);
+int adjustForAces(int points, int aceCount);
 void blackjack();
 
 #pragma endregion
@@ -105,7 +108,12 @@ void resetBoard();
 void printBoard();
 int checkWin();
 void playerVSplayer();
-void playerVScomputer();
+void selectDifficulty();
+void playerVScomputer(int difficulty);
+int evaluateBoard();
+int minimax(int depth, int isMaximizing);
+int findBestMove();
+
 
 #pragma endregion
 

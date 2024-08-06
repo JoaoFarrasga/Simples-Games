@@ -17,19 +17,14 @@
  * @param [out] Nothing
  */
 void shuffle(int* cards) {
-
     srand(time(NULL));
 
     for (int i = 51; i > 0; i--) {
-
         int j = rand() % (i + 1);
         int temp = cards[i];
-
         cards[i] = cards[j];
         cards[j] = temp;
-
     }
-
 }
 
 /**
@@ -39,7 +34,6 @@ void shuffle(int* cards) {
  * @param [out] Nothing
 */
 void printCard(int card) {
-
     const char* suits[] = {"Hearts", "Diamonds", "Clubs", "Spades"};
     const char* faces[] = {"Ace", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Jack", "Queen", "King"};
 
@@ -47,7 +41,6 @@ void printCard(int card) {
     int face = card % 13;
     
     printf("\t%2s of %2s\n\n", faces[face], suits[suit]);
-
 }
 
 /**
@@ -57,19 +50,30 @@ void printCard(int card) {
  * @param [out] Points The Points of the Card
 */
 int pointCard(int card) {
-
     int value = card % 13 + 1;
 
     if (value > 10) {
-
-        return 10;
-
+        return 10; // Face cards are worth 10 points
+    } else if (value == 1) {
+        return 11; // Ace initially counts as 11
     } else {
-
         return value;
-
     }
+}
 
+/**
+ * @brief Adjusts Points if there is an Ace and the total exceeds 21
+ * 
+ * @param [in] points Current points of the hand
+ * @param [in] aceCount Number of aces in the hand
+ * @return Adjusted points
+ */
+int adjustForAces(int points, int aceCount) {
+    while (points > 21 && aceCount > 0) {
+        points -= 10; // Count Ace as 1 instead of 11
+        aceCount--;
+    }
+    return points;
 }
 
 /**
@@ -79,101 +83,112 @@ int pointCard(int card) {
  * @param [out] Nothing
 */
 void blackjack() {
-
-    int computerPoints, playerPoints, choice;
+    int computerPoints, playerPoints, choice, playerAceCount = 0, computerAceCount = 0;
     int i = 0;
     int deck[52];
     int computerHand[26], playerHand[26];
 
     for (int i = 0; i < 52; i++) {
-
         deck[i] = i;
-
     }
 
     shuffle(deck);
 
     computerHand[0] = deck[0];
+    computerHand[1] = deck[1];
+    playerHand[0] = deck[2];
+    playerHand[1] = deck[3];
 
-    playerHand[0] = deck[1];
-    playerHand[1] = deck[2];
-
-    computerPoints = pointCard(computerHand[0]);
+    computerPoints = pointCard(computerHand[0]) + pointCard(computerHand[1]);
     playerPoints = pointCard(playerHand[0]) + pointCard(playerHand[1]);
 
-    printf("\tThe Computer Hand:\n\n");
-    printCard(computerHand[0]);
-    printf("\tThe Computer has %d Points\n\n\n", computerPoints);
+    if (pointCard(computerHand[0]) == 11) computerAceCount++;
+    if (pointCard(computerHand[1]) == 11) computerAceCount++;
+    if (pointCard(playerHand[0]) == 11) playerAceCount++;
+    if (pointCard(playerHand[1]) == 11) playerAceCount++;
 
-    printf("\tThe Player Hand:\n\n");
+    playerPoints = adjustForAces(playerPoints, playerAceCount);
+
+    printf("\tThe Computer's Hand:\n\n");
+    printCard(computerHand[0]);
+    printf("\tThe Computer's visible card has %d points\n\n\n", pointCard(computerHand[0]));
+
+    // Check for computer blackjack
+    if ((pointCard(computerHand[0]) == 10 && pointCard(computerHand[1]) == 11) || 
+        (pointCard(computerHand[0]) == 11 && pointCard(computerHand[1]) == 10)) {
+        printf("Computer has Blackjack! You lose!\n");
+        endGameMenu(3, -1);
+        return;
+    }
+
+    printf("\tThe Player's Hand:\n\n");
     printCard(playerHand[0]);
     printCard(playerHand[1]);
-    printf("\tThe Player has %d Points\n\n\n", playerPoints);
+    printf("\tThe Player has %d points\n\n\n", playerPoints);
 
-    while(playerPoints <= 21) {
-
-        printf("\tYou want to Hit or Stand\n");
-        printf("\t 1 for Hit, 2 for Stand\n");
+    while (playerPoints <= 21) {
+        printf("\tDo you want to Hit or Stand?\n");
+        printf("\t1 for Hit, 2 for Stand\n");
         choice = getChoice(1, 2);
 
         if (choice == 1) {
+            playerHand[i + 2] = deck[i + 4];
+            int newCard = pointCard(playerHand[i + 2]);
+            if (newCard == 11) playerAceCount++;
 
-            playerHand[i + 2] = deck[i + 3];
-            playerPoints += pointCard(playerHand[i + 2]);
+            playerPoints += newCard;
+            playerPoints = adjustForAces(playerPoints, playerAceCount);
 
-            printf("\tThe Card you got is: \n");
+            printf("\tThe Card you got is:\n");
             printCard(playerHand[i + 2]);
-            printf("\tThe Player has %d Points\n\n\n", playerPoints);
+            printf("\tThe Player has %d points\n\n\n", playerPoints);
+
+            if (playerPoints > 21) {
+                printf("You Bust!\n");
+                endGameMenu(3, -1);
+                return;
+            }
 
         } else {
-
             break;
-
         }
-
-        if (playerPoints > 21) {
-
-            printf("You Bust!");
-            endGameMenu(3, -1);
-
-        }
-
         i++;
-
     }
 
-    while (computerPoints < playerPoints) {
+    printf("\tThe Computer's Hidden Card was:\n");
+    printCard(computerHand[1]);
+    printf("\tThe Computer has %d points\n\n\n", computerPoints);
 
-        computerHand[i + 1] = deck[i + 26];
-        computerPoints += pointCard(computerHand[i + 1]);
+    while (computerPoints < 17) {
+        computerHand[i + 2] = deck[i + 26];
+        int newCard = pointCard(computerHand[i + 2]);
+        if (newCard == 11) computerAceCount++;
 
-        printf("\tThe Computer Choose Hit\n");
-        printCard(computerHand[i + 1]);
-        printf("\tThe Computer has %d Points\n\n\n", computerPoints);
+        computerPoints += newCard;
+        computerPoints = adjustForAces(computerPoints, computerAceCount);
+
+        printf("\tThe Computer chooses to Hit\n");
+        printCard(computerHand[i + 2]);
+        printf("\tThe Computer has %d points\n\n\n", computerPoints);
 
         if (computerPoints > 21) {
-
-            printf("Computer Bust!");
+            printf("Computer Busts! You win!\n");
             endGameMenu(3, 1);
-
+            return;
         }
-
         i++;
-
     }
 
     if (computerPoints > playerPoints) {
-
-        printf("The Computer has more points than you!");
-	    endGameMenu(3, -1);
-
+        printf("The Computer has more points than you!\n");
+        endGameMenu(3, -1);
+    } else if (computerPoints == playerPoints) {
+        printf("It's a draw!\n");
+        endGameMenu(3, 0);
     } else {
-
-        printf("You Won");
+        printf("You win!\n");
         endGameMenu(3, 1);
-
     }
-
 }
 
 #pragma endregion
