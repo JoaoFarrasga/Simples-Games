@@ -260,8 +260,66 @@ void ScoreGameAdd(int numberGame, char* name, int score) {
         GameInsert(currentGame);
     }
 
-    Scoreboard* newScoreboard = ScoreboardAdd(name, score);
-    ScoreboardInsert(currentGame, newScoreboard);
+    if (!ScoreAddPointsIfExists(currentGame, name, score)) {
+        Scoreboard* newScoreboard = ScoreboardAdd(name, score);
+        ScoreboardInsert(currentGame, newScoreboard);
+    }
+
+    ScoreboardReorder(currentGame);
+}
+
+/**
+ * @brief Adds points to a player if they already exist in the scoreboard
+ * 
+ * @param [in] currentGame The Game whose scoreboard should be checked
+ * @param [in] name The name of the player
+ * @param [in] score The points to add
+ * @return 1 if the player exists and score was updated, 0 otherwise
+ */
+int ScoreAddPointsIfExists(Game* currentGame, char* name, int score) {
+    if (currentGame == NULL) return 0;
+
+    Scoreboard* node = currentGame->scoreboard;
+    while (node != NULL) {
+        if (strcmp(node->name, name) == 0) {
+            node-> score += score;
+            return 1; // Player found & updated
+        }
+        node = node->next;
+    }
+
+    return 0; // Player not found
+}
+
+/**
+ * @brief Reordes the scorebaord of a game in descending score order.
+ * 
+ * @param [in] currentGame The Game whose scoreboard should be reordered
+ * @return Nothing
+ */
+void ScoreboardReorder(Game* currentGame) {
+    if (currentGame == NULL || currentGame->scoreboard == NULL) return;
+
+    Scoreboard* sorted = NULL;
+
+    while (currentGame->scoreboard != NULL) {
+        Scoreboard* node = currentGame->scoreboard;
+        currentGame->scoreboard = node->next;
+
+        if (sorted == NULL || node->score > sorted->score){
+            node->next = sorted;
+            sorted = node;
+        } else {
+            Scoreboard* aux = sorted;
+            while (aux->next != NULL && aux->next->score >= node->score) {
+                aux = aux->next;
+            }
+            node->next = aux->next;
+            aux->next = node;
+        }
+    }
+
+    currentGame->scoreboard = sorted;
 }
 
 /**

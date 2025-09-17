@@ -54,6 +54,8 @@ void ScoreboardInsert(Game* game, Scoreboard* newScoreboard);
 void ScoreboardPrint(int numberGame);
 int ScoreExists(int numberGame, char* name);
 void ScoreGameAdd(int numberGame, char* name, int score);
+int ScoreAddPointsIfExists(Game* currentGame, char* name, int score);
+void ScoreboardReorder(Game* currentGame);
 int GiveScoreGlobal(char* name);
 void ScoreGlobalReadInitial();
 
