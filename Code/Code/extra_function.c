@@ -118,6 +118,9 @@ int getMin(int a, int b) {
     return (a < b) ? a : b;
 }
 
+/** 
+ * @brief ContinuePrompt asks for a 0 to continue the game
+ */
 void continuePrompt() {
     printf("\n\n\t Enter 0 - To Continue\n");
     int choice = getChoice(0, 0);

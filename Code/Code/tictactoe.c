@@ -194,9 +194,10 @@ void playerVSplayer() {
 	printBoard();
 
 	if (win == 1) {
-		printf("\n\tPlayer %d you Won\n\n", --player);
+        endGameMenuDouble(4, 1, -1, --player, player);
 	} else {
 		printf("\n\tGame Draw\n\n");
+        endGameMenu(4, 0);
 	}
 
 }

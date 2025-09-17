@@ -265,13 +265,13 @@ void endGameMenu(int numberGame, int points) {
  */
 void endGameMenuDouble(int numberGame, int wonPoints, int losePoints, int wonPlayer, int losePlayer) {
 
-    printf("\t\t Player %d won the game receiving %d Points\n\n", wonPlayer, wonPoints);
+    printf("\t Player %d won the game receiving %d Points\n\n", wonPlayer, wonPoints);
     char* wonName = getName();
     ScoreGameAdd(numberGame, wonName, wonPoints);
 
     system("cls");
 
-    printf("\t\t Player %d lost the game losing %d Points\n\n", losePlayer, losePoints);
+    printf("\t Player %d lost the game losing %d Points\n\n", losePlayer, losePoints);
     char* loseName = getName();
     ScoreGameAdd(numberGame, loseName, losePoints);
 
