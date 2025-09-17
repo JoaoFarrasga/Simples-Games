@@ -232,16 +232,24 @@ void playAgainMenu(int numberGame) {
  */
 void endGameMenu(int numberGame, int points) {
 
-    printf("\t\t Score \n\n\t Your Score is %d\n\n", points);
+    if (points != 0) {  
+        printf("\t\t Score \n\n\t Your Score is %d\n\n", points);
+        
+        char* name = getName();
     
-    char* name = getName();
+        system("cls");
+    
+        printf("You played Game %d, won %d points, and you are %2s", numberGame, points, name);
+    
+        ScoreGameAdd(numberGame, name, points);
+        playAgainMenu(numberGame);
+    } else {
+        printf("You played Game %d, and didn't won any points", numberGame);
 
-    system("cls");
+        continuePrompt();
 
-    printf("You played Game %d, won %d points, and you are %2s", numberGame, points, name);
-
-    ScoreGameAdd(numberGame, name, points);
-    playAgainMenu(numberGame);
+        playAgainMenu(numberGame);
+    }
 
 }
 

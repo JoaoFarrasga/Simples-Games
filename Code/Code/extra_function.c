@@ -96,12 +96,33 @@ char* getName() {
 
 }
 
+/**
+ * @brief GetMax gives the bigger number out of two numbers
+ * 
+ * @param [in] Number1
+ * @param [out] Number2
+ * @param [out] BiggestNumber
+ */
 int getMax(int a, int b) {
     return (a > b) ? a : b;
 }
 
+/**
+ * @brief GetMin gives the smallest number out of two numbers
+ * 
+ * @param [in] Number1
+ * @param [out] Number2
+ * @param [out] SmallestNumber
+ */
 int getMin(int a, int b) {
     return (a < b) ? a : b;
+}
+
+void continuePrompt() {
+    printf("\n\n\t Enter 0 - To Continue\n");
+    int choice = getChoice(0, 0);
+
+    system("cls");
 }
 
 #pragma endregion

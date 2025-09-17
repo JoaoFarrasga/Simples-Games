@@ -76,6 +76,7 @@ int randomInt(int min, int max);
 char* getName();
 int getMax();
 int getMin();
+void continuePrompt();
 
 #pragma endregion
 

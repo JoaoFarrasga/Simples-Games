@@ -287,6 +287,10 @@ void playerVScomputer(int difficulty) {
             endGameMenu(4, -1);
         }
     } 
+    else if (win == 0) {
+        printf("\n\tGame Draw\n\n");
+        endGameMenu(4, 0);
+    }
 }
 
 /**

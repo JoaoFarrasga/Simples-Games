@@ -22,7 +22,7 @@ Game* header = NULL;
 void ScoreboardRead() {
     int game, score;
     char name[4];
-    FILE* file = fopen("scoreboard.txt", "r");
+    FILE* file = fopen("Code/scoreboard.txt", "r");
 
     if (file == NULL) {
         printf("Sorry but the Scoreboard is not Working right Now\n\n");
@@ -59,7 +59,7 @@ void ScoreboardRead() {
  * @param [out] Nothing
 */
 void ScoreboardWrite() {
-    FILE* file = fopen("scoreboard.txt", "w");
+    FILE* file = fopen("Code/scoreboard.txt", "w");
 
     if (file == NULL) {
         printf("Sorry but the Scoreboard is not Working right Now\n\n");
