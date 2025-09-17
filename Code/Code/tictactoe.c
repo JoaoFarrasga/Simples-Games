@@ -141,7 +141,8 @@ void playerVSplayer() {
 	int win = -1, player, choice;
 	char mark;
 
-	player = randomInt(1, 2);
+	player = randomInt(1, 2); // Decides who starts
+    int firstPlayer = player; // Save the first Player
 
 	do {
 
@@ -194,10 +195,26 @@ void playerVSplayer() {
 	printBoard();
 
 	if (win == 1) {
-        endGameMenuDouble(4, 1, -1, --player, player);
+        player--;
+
+        int winner = player;
+        int loser = (winner == 1) ? 2 : 1;
+
+        int winnerPoints = 0, loserPoints = 0;
+
+        // Points Rule in the Index pdf
+        if (winner == firstPlayer) {
+            winnerPoints = +1;
+            loserPoints = -1; // Because the loser started second
+        } else {
+            winnerPoints = +2;
+            loserPoints = -2; // Because the loser started first
+        }
+
+        endGameMenuDouble(4, winnerPoints, loserPoints, winner, loser);
 	} else {
 		printf("\n\tGame Draw\n\n");
-        endGameMenu(4, 0);
+        endGameMenu(4, 0); // Draw does not give points
 	}
 
 }
