@@ -129,10 +129,11 @@ void scoreboardMenu() {
            "\t Enter 2 - Guess the Card\n"
            "\t Enter 3 - Black Jack\n"
            "\t Enter 4 - Tic Tac Toe\n"
-           "\t Enter 5 - Four In A Row\n"
+           "\t Enter 5 - HangMan\n"
+           "\t Enter 6 - Four In A Row\n"
            "\n\t Enter 0 - Back\n");
 
-    int choice = getChoice(0, 5);
+    int choice = getChoice(0, 6);
     switch (choice) {
         case 1:
             ScoreboardPrint(choice);
@@ -151,6 +152,10 @@ void scoreboardMenu() {
             break;
 
         case 5:
+            ScoreboardPrint(choice);
+            break;
+
+        case 6:
             ScoreboardPrint(choice);
             break;
 

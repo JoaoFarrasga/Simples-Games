@@ -138,8 +138,10 @@ void printBoardConnectFour();
 int makeMove(int player, int col);
 int checkWinConnectFour(int player);
 void connectfour();
+void selectDifficultyConnectFour();
 void playerVSplayerConnectFour();
-void playerVScomputerConnectFour();
+void playerVScomputerConnectFour(int difficulty);
+int bestMoveConnectFour(int computer, int opponent);
 
 #pragma endregion
 

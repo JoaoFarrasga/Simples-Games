@@ -1,8 +1,5 @@
 Connect Four {
-
-    Need to add Given Points;
-
-    Make the Bot Stronger;
+    Difficulty 3 - actual bot (if possible)
 }
 
 MasterMind {

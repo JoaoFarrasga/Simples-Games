@@ -1,6 +1,7 @@
 #pragma region Includes
 
 #include <stdio.h>
+#include <string.h>
 #include <stdlib.h>
 #include <time.h>
 #include <conio.h>
@@ -91,7 +92,7 @@ int makeMove(int player, int col) {
  * @brief Checks if the Player has won the Game, or if the Board is Full
  * 
  * @param [in] Player The Player to check if he has won the Game
- * @param [out] Boolean 2 if the Board is Full, 1 if the Player has won the Game, 0 otherwise
+ * @return Number 2 if the Board is Full, 1 if the Player has won the Game, 0 otherwise
 */
 int checkWinConnectFour(int player) {
 
@@ -216,7 +217,7 @@ void connectfour() {
 			break;
 
 		case 2:
-			playerVScomputerConnectFour();
+			selectDifficultyConnectFour();
 			break;
 
 		case 0:
@@ -225,6 +226,38 @@ void connectfour() {
 
 	}
 
+}
+
+/**
+ * @brief Selects difficulty for playing against the computer
+ * 
+ * @param [in] Nothing
+ * @param [out] Nothing
+ */
+void selectDifficultyConnectFour() {
+    int choice;
+
+    printf("\t\t Choose Difficulty Level \n\n"
+           "\t Enter 1 - Easy (Random Moves)\n"
+           "\t Enter 2 - Hard (Better AI)\n"
+		   "\n\t Enter 0 - Back\n");
+
+	choice = getChoice(0, 2);
+	switch (choice) {
+
+		case 1:
+			playerVScomputerConnectFour(0);  // Easy
+			break;
+
+		case 2:
+			playerVScomputerConnectFour(1);  // Hard
+			break;
+
+		case 0:
+			connectfour();
+			break;
+
+	}
 }
 
 /**
@@ -269,13 +302,11 @@ void playerVSplayerConnectFour() {
     } while (win == 0);
 
     if (win == 2) {
-
         printf("\n   The board is Full\n\n");
-
+        endGameMenu(6, 0);
     } else {
-
         printf("\n   The Player %d won\n\n", player);
-
+        endGameMenuDouble(6, 4, -4, player, player == 1 ? 2 : 1);
     }
 
 }
@@ -283,10 +314,10 @@ void playerVSplayerConnectFour() {
 /**
  * @brief Player vs Computer Connect Four Game
  * 
- * @param [in] Nothing
+ * @param [in] Int The difficulty of the game
  * @param [out] Nothing
 */
-void playerVScomputerConnectFour() {
+void playerVScomputerConnectFour(int difficulty) {
 
     int win = 0, player = randomInt(1, 2);
 
@@ -294,15 +325,7 @@ void playerVScomputerConnectFour() {
 
     do {
 
-        if (player == 1) {
-
-            player = 2;
-
-        } else {
-
-            player = 1;
-
-        }
+        player = player == 1 ? 2 : 1;
 
         if (player == 1) {
 
@@ -317,9 +340,16 @@ void playerVScomputerConnectFour() {
 
         } else {
 
-            int choice = randomInt(1, 7);
-            makeMove(player, choice);
-            
+            int choice = 0;
+
+            if (difficulty == 0) {
+                int choice = randomInt(1, 7);
+                makeMove(player, choice);
+            } else {
+                int choice = bestMoveConnectFour(player, player == 1 ? 2 : 1);
+                makeMove(player, choice);
+            }
+
             printf("\n   Computer Played %d\n", choice);
 
             printBoardConnectFour();
@@ -333,21 +363,95 @@ void playerVScomputerConnectFour() {
     if (win == 2) {
 
         printf("\n   The board is Full\n\n");
+        endGameMenu(6, 0);
 
     } else {
 
         if (player == 1) {
 
             printf("\n   The Player won\n\n");
+            endGameMenu(6, 4);
 
         } else {
 
             printf("\n   The Computer lost\n\n");
+            endGameMenu(6, -4);
 
         }
 
     }
 
+}
+
+/**
+ * @brief Returns the best column for the computer to play in Connect Four
+ * 
+ * @param [in] Computer The number of the computer player (1 or 2)
+ * @param [in] Opponent The number of the opponent player (1 or 2)
+ * @return index (1-7)
+ */
+int bestMoveConnectFour(int computer, int opponent) {
+    printf("tryng to find best move");
+
+    // If the computer as a winning move
+    for (int col = 1; col <= 7; col++) {
+        char backup[6][7];
+        memcpy(backup, boardConnectFour, sizeof(boardConnectFour));
+
+        if (makeMove(computer, col)) {
+            if (checkWinConnectFour(computer) == 1) {
+                memcpy(boardConnectFour, backup, sizeof(boardConnectFour));
+                return col;
+            }
+        }
+
+        memcpy(boardConnectFour, backup, sizeof(boardConnectFour));
+    }
+
+    printf("No winning Moves");
+
+    // If the player as a winning move, it blocks it
+    for (int col = 1; col <= 7; col++) {
+        char backup[6][7];
+        memcpy(backup, boardConnectFour, sizeof(boardConnectFour));
+
+        if (makeMove(opponent, col)) {
+            if (checkWinConnectFour(opponent) == 1) {
+                memcpy(boardConnectFour, backup, sizeof(boardConnectFour));
+                return col;
+            }
+        }
+
+        memcpy(boardConnectFour, backup, sizeof(boardConnectFour));
+    }
+
+        printf("Player has no winning Moves");
+
+    // Play in the middle as much as possible
+    if (boardConnectFour[0][3] == ' ') {
+        return 4; // Collumn of the middle
+    }
+
+        printf("Middle is not open");
+
+
+    // Prefer the collumn next to the middle as possible
+    int preferredOrder[7] = {4, 3, 5, 2, 6, 1, 7};
+    for (int i = 0; i < 7; i++) {
+        if (boardConnectFour[0][preferredOrder[i] - 1] == ' ') {
+            return preferredOrder[i];
+        }
+    } 
+
+        printf("No preferred moves");
+
+    // If everything fails gives a random (safe fail)
+    int col;
+    do {
+        col = randomInt(1, 7);
+    } while ( boardConnectFour[0][col - 1] != ' ');
+
+    return col;
 }
 
 #pragma endregion
