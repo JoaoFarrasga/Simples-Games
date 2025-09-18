@@ -37,7 +37,7 @@ void mainMenu();
 void selectGame();
 void scoreboardMenu();
 void playAgainMenu(int numberGame);
-void endGameMenu(int numberGame, int points);
+void endGameMenu(int numberGame, int points, int difficulty);
 void endGameMenuDouble(int numberGame, int wonPoints, int losePoints, int wonPlayer, int losePlayer);
 void globalScoreMenu();
 

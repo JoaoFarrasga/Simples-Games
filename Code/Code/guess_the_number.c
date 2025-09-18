@@ -56,7 +56,7 @@ void guessNumber() {
     getch();
     system("cls");
 
-    endGameMenu(1, points);
+    endGameMenu(1, points, 1);
 }
 
 #pragma endregion

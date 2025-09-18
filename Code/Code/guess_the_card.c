@@ -113,7 +113,7 @@ void guessCard() {
     getch();
     system("cls");
 
-    endGameMenu(2, points);
+    endGameMenu(2, points, 1);
 
 }
 

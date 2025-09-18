@@ -117,7 +117,7 @@ void blackjack() {
     if ((pointCard(computerHand[0]) == 10 && pointCard(computerHand[1]) == 11) || 
         (pointCard(computerHand[0]) == 11 && pointCard(computerHand[1]) == 10)) {
         printf("Computer has Blackjack! You lose!\n");
-        endGameMenu(3, -1);
+        endGameMenu(3, -1, 1);
         return;
     }
 
@@ -145,7 +145,7 @@ void blackjack() {
 
             if (playerPoints > 21) {
                 printf("You Bust!\n");
-                endGameMenu(3, -1);
+                endGameMenu(3, -1, 1);
                 return;
             }
 
@@ -173,7 +173,7 @@ void blackjack() {
 
         if (computerPoints > 21) {
             printf("Computer Busts! You win!\n");
-            endGameMenu(3, 1);
+            endGameMenu(3, 1, 1);
             return;
         }
         i++;
@@ -181,13 +181,13 @@ void blackjack() {
 
     if (computerPoints > playerPoints) {
         printf("The Computer has more points than you!\n");
-        endGameMenu(3, -1);
+        endGameMenu(3, -1, 1);
     } else if (computerPoints == playerPoints) {
         printf("It's a draw!\n");
-        endGameMenu(3, 0);
+        endGameMenu(3, 0, 1);
     } else {
         printf("You win!\n");
-        endGameMenu(3, 1);
+        endGameMenu(3, 1, 1);
     }
 }
 

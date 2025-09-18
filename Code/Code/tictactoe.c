@@ -214,7 +214,7 @@ void playerVSplayer() {
         endGameMenuDouble(4, winnerPoints, loserPoints, winner, loser);
 	} else {
 		printf("\n\tGame Draw\n\n");
-        endGameMenu(4, 0); // Draw does not give points
+        endGameMenu(4, 0, 1); // Draw does not give points
 	}
 
 }
@@ -299,15 +299,15 @@ void playerVScomputer(int difficulty) {
     if (win == 1) {
         if (--player == 1) {
             printf("The Player Won");
-            endGameMenu(4, 1);
+            endGameMenu(4, 1, difficulty + 1);
         } else {
             printf("The Computer Won");
-            endGameMenu(4, -1);
+            endGameMenu(4, -1, 1);
         }
     } 
     else if (win == 0) {
         printf("\n\tGame Draw\n\n");
-        endGameMenu(4, 0);
+        endGameMenu(4, 0, 1);
     }
 }
 

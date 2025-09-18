@@ -308,7 +308,7 @@ void playerVSplayerConnectFour() {
 
     if (win == 2) {
         printf("\n   The board is Full\n\n");
-        endGameMenu(6, 0);
+        endGameMenu(6, 0, 1);
     } else {
         printf("\n   The Player %d won\n\n", player);
         endGameMenuDouble(6, 4, -4, player, player == 1 ? 2 : 1);
@@ -324,71 +324,62 @@ void playerVSplayerConnectFour() {
 */
 void playerVScomputerConnectFour(int difficulty) {
 
-    int win = 0, player = randomInt(1, 2);
+    int win = 0;
+    int human = 1;      // Human is always player 1
+    int computer = 2;   // Computer is always player 2
+    int turn = randomInt(1, 2); // Randomize who starts
 
     printBoardConnectFour();
 
     do {
+        // alternate turns
+        turn = (turn == 1) ? 2 : 1;
 
-        player = player == 1 ? 2 : 1;
-
-        if (player == 1) {
-
-            printf("\n   Player is your Turn\n", player);
+        if (turn == human) {
+            printf("\n   Player, it is your Turn\n");
 
             int choice = getChoice(1, 7);
-            makeMove(player, choice);
-        
+            makeMove(human, choice);
+
             printBoardConnectFour();
-        
-            win = checkWinConnectFour(player);
 
-        } else {
+            win = checkWinConnectFour(human);
 
+        } else { // computer's turn
             int choice = 0;
 
             if (difficulty == 0) {
-                int choice = randomInt(1, 7);
-                makeMove(player, choice);
+                choice = randomInt(1, 7);
+                makeMove(computer, choice);
             } else if (difficulty == 1) {
-                int choice = bestMoveConnectFour(player, player == 1 ? 2 : 1);
-                makeMove(player, choice);
+                choice = bestMoveConnectFour(computer, human);
+                makeMove(computer, choice);
             } else {
-                int choice = bestMoveConnectFourMinimax(player, player == 1 ? 2 : 1);
-                makeMove(player, choice);
+                choice = bestMoveConnectFourMinimax(computer, human);
+                makeMove(computer, choice);
             }
 
             printf("\n   Computer Played %d\n", choice);
 
             printBoardConnectFour();
 
-            win = checkWinConnectFour(player);
-
+            win = checkWinConnectFour(computer);
         }
 
     } while (win == 0);
 
     if (win == 2) {
-
         printf("\n   The board is Full\n\n");
-        endGameMenu(6, 0);
-
+        endGameMenu(6, 0, 1);
     } else {
-
-        if (player == 1) {
-
+        if (turn == human) {
             printf("\n   The Player won\n\n");
-            endGameMenu(6, 4);
-
+            endGameMenu(6, 4, difficulty + 1);
         } else {
-
-            printf("\n   The Computer lost\n\n");
-            endGameMenu(6, -4);
-
+            printf("\n   The Computer won\n\n");
+            endGameMenu(6, -4, 1);
         }
-
     }
-
 }
 
 /**

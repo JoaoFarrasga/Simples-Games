@@ -235,7 +235,9 @@ void playAgainMenu(int numberGame) {
  * @param [in] Points The Points Earned
  * @param [out] Nothing 
  */
-void endGameMenu(int numberGame, int points) {
+void endGameMenu(int numberGame, int points, int difficulty) {
+
+    points *= difficulty;
 
     if (points != 0) {  
         printf("\t\t Score \n\n\t Your Score is %d\n\n", points);
