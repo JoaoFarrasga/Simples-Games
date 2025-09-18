@@ -238,11 +238,12 @@ void selectDifficultyConnectFour() {
     int choice;
 
     printf("\t\t Choose Difficulty Level \n\n"
-           "\t Enter 1 - Easy (Random Moves)\n"
-           "\t Enter 2 - Hard (Better AI)\n"
+           "\t Enter 1 - Easy     (Random Moves)\n"
+           "\t Enter 2 - Normal   (Better AI)\n"
+           "\t Enter 3 - Hard     (Minimax AI)\n"
 		   "\n\t Enter 0 - Back\n");
 
-	choice = getChoice(0, 2);
+	choice = getChoice(0, 3);
 	switch (choice) {
 
 		case 1:
@@ -250,8 +251,12 @@ void selectDifficultyConnectFour() {
 			break;
 
 		case 2:
-			playerVScomputerConnectFour(1);  // Hard
+			playerVScomputerConnectFour(1);  // Normal
 			break;
+
+        case 3:
+            playerVScomputerConnectFour(2);  // Hard
+            break;
 
 		case 0:
 			connectfour();
@@ -345,8 +350,11 @@ void playerVScomputerConnectFour(int difficulty) {
             if (difficulty == 0) {
                 int choice = randomInt(1, 7);
                 makeMove(player, choice);
-            } else {
+            } else if (difficulty == 1) {
                 int choice = bestMoveConnectFour(player, player == 1 ? 2 : 1);
+                makeMove(player, choice);
+            } else {
+                int choice = bestMoveConnectFourMinimax(player, player == 1 ? 2 : 1);
                 makeMove(player, choice);
             }
 
@@ -391,8 +399,6 @@ void playerVScomputerConnectFour(int difficulty) {
  * @return index (1-7)
  */
 int bestMoveConnectFour(int computer, int opponent) {
-    printf("tryng to find best move");
-
     // If the computer as a winning move
     for (int col = 1; col <= 7; col++) {
         char backup[6][7];
@@ -407,8 +413,6 @@ int bestMoveConnectFour(int computer, int opponent) {
 
         memcpy(boardConnectFour, backup, sizeof(boardConnectFour));
     }
-
-    printf("No winning Moves");
 
     // If the player as a winning move, it blocks it
     for (int col = 1; col <= 7; col++) {
@@ -425,15 +429,10 @@ int bestMoveConnectFour(int computer, int opponent) {
         memcpy(boardConnectFour, backup, sizeof(boardConnectFour));
     }
 
-        printf("Player has no winning Moves");
-
     // Play in the middle as much as possible
     if (boardConnectFour[0][3] == ' ') {
         return 4; // Collumn of the middle
     }
-
-        printf("Middle is not open");
-
 
     // Prefer the collumn next to the middle as possible
     int preferredOrder[7] = {4, 3, 5, 2, 6, 1, 7};
@@ -443,8 +442,6 @@ int bestMoveConnectFour(int computer, int opponent) {
         }
     } 
 
-        printf("No preferred moves");
-
     // If everything fails gives a random (safe fail)
     int col;
     do {
@@ -452,6 +449,193 @@ int bestMoveConnectFour(int computer, int opponent) {
     } while ( boardConnectFour[0][col - 1] != ' ');
 
     return col;
+}
+
+/**
+ * @brief Evaluates the current board for minimax scoring
+ * 
+ * @param [in] computer The computer player number (1 or 2)
+ * @param [in] opponent The opponent player number (1 or 2)
+ * @return int Score of the board (positive = good for computer)
+ */
+int evaluateBoardConnectFour(char board[6][7], char cMark, char oMark) {
+    int score = 0;
+    char window[4];
+
+    // --- Verificar linhas horizontais ---
+    for (int row = 0; row < 6; row++) {
+        for (int col = 0; col < 7 - 3; col++) {
+            for (int i = 0; i < 4; i++) {
+                window[i] = board[row][col + i];
+            }
+            score += checkWindow(window, cMark, oMark);
+        }
+    }
+
+    // --- Verificar colunas verticais ---
+    for (int col = 0; col < 7; col++) {
+        for (int row = 0; row < 6 - 3; row++) {
+            for (int i = 0; i < 4; i++) {
+                window[i] = board[row + i][col];
+            }
+            score += checkWindow(window, cMark, oMark);
+        }
+    }
+
+    // --- Verificar diagonais positivas (/ direção) ---
+    for (int row = 0; row < 6 - 3; row++) {
+        for (int col = 0; col < 7 - 3; col++) {
+            for (int i = 0; i < 4; i++) {
+                window[i] = board[row + i][col + i];
+            }
+            score += checkWindow(window, cMark, oMark);
+        }
+    }
+
+    // --- Verificar diagonais negativas (\ direção) ---
+    for (int row = 3; row < 6; row++) {
+        for (int col = 0; col < 7 - 3; col++) {
+            for (int i = 0; i < 4; i++) {
+                window[i] = board[row - i][col + i];
+            }
+            score += checkWindow(window, cMark, oMark);
+        }
+    }
+
+    return score;
+}
+
+/**
+ * @brief Minimax with alpha-beta pruning
+ */
+// minimax with alpha-beta and terminal win checks
+int minimaxConnectFour(int depth, int alpha, int beta, int maximizingPlayer, int computer, int opponent) {
+    // Terminal wins: give very large values so these are always preferred
+    if (checkWinConnectFour(computer) == 1) return 1000000;
+    if (checkWinConnectFour(opponent) == 1) return -1000000;
+
+    // If we've reached depth limit, evaluate by heuristic
+    if (depth == 0) {
+        char cMark = (computer == 1) ? 'X' : 'O';
+        char oMark = (opponent == 1) ? 'X' : 'O';
+        return evaluateBoardConnectFour(boardConnectFour, cMark, oMark);
+    }
+
+    // Move order (center-first) helps alpha-beta
+    int order[7] = {4,3,5,2,6,1,7};
+
+    if (maximizingPlayer) {
+        int maxEval = -10000000;
+        for (int i = 0; i < 7; i++) {
+            int col = order[i];
+            if (boardConnectFour[0][col-1] != ' ') continue;
+
+            char backup[6][7];
+            memcpy(backup, boardConnectFour, sizeof(boardConnectFour));
+
+            if (makeMove(computer, col)) {
+                int eval = minimaxConnectFour(depth - 1, alpha, beta, 0, computer, opponent);
+                memcpy(boardConnectFour, backup, sizeof(boardConnectFour));
+
+                if (eval > maxEval) maxEval = eval;
+                if (eval > alpha) alpha = eval;
+                if (beta <= alpha) break; // alpha-beta prune
+            } else {
+                memcpy(boardConnectFour, backup, sizeof(boardConnectFour));
+            }
+        }
+        return maxEval;
+    } else {
+        int minEval = 10000000;
+        for (int i = 0; i < 7; i++) {
+            int col = order[i];
+            if (boardConnectFour[0][col-1] != ' ') continue;
+
+            char backup[6][7];
+            memcpy(backup, boardConnectFour, sizeof(boardConnectFour));
+
+            if (makeMove(opponent, col)) {
+                int eval = minimaxConnectFour(depth - 1, alpha, beta, 1, computer, opponent);
+                memcpy(boardConnectFour, backup, sizeof(boardConnectFour));
+
+                if (eval < minEval) minEval = eval;
+                if (eval < beta) beta = eval;
+                if (beta <= alpha) break; // prune
+            } else {
+                memcpy(boardConnectFour, backup, sizeof(boardConnectFour));
+            }
+        }
+        return minEval;
+    }
+}
+
+/**
+ * bestMoveConnectFourMinimax: check immediate wins first, then minimax
+ */
+int bestMoveConnectFourMinimax(int computer, int opponent) {
+    int bestScore = -10000000;
+    int bestCol = -1;
+    int order[7] = {4,3,5,2,6,1,7}; // prefer center columns
+
+    for (int i = 0; i < 7; i++) {
+        int col = order[i];
+        if (boardConnectFour[0][col-1] != ' ') continue; // column full
+
+        char backup[6][7];
+        memcpy(backup, boardConnectFour, sizeof(boardConnectFour));
+
+        if (!makeMove(computer, col)) {
+            memcpy(boardConnectFour, backup, sizeof(boardConnectFour));
+            continue;
+        }
+
+        // If this move wins immediately, pick it (restore board first)
+        if (checkWinConnectFour(computer) == 1) {
+            memcpy(boardConnectFour, backup, sizeof(boardConnectFour));
+            return col;
+        }
+
+        // Otherwise evaluate with minimax
+        int score = minimaxConnectFour(5, -10000000, 10000000, 0, computer, opponent); // depth 5 (tweakable)
+        memcpy(boardConnectFour, backup, sizeof(boardConnectFour));
+
+        if (score > bestScore) {
+            bestScore = score;
+            bestCol = col;
+        }
+    }
+
+    // fallback: if nothing found (shouldn't happen), choose any valid column
+    if (bestCol == -1) {
+        for (int c = 1; c <= 7; c++) {
+            if (boardConnectFour[0][c-1] == ' ') { bestCol = c; break; }
+        }
+    }
+
+    return bestCol;
+}
+
+/**
+ * @brief Function to check the Window
+ */
+int checkWindow(char window[4], char cMark, char oMark) {
+    int score = 0;
+    int cCount = 0, oCount = 0, empty = 0;
+
+    for (int i = 0; i < 4; i++) {
+        if (window[i] == cMark) cCount++;
+        else if (window[i] == oMark) oCount++;
+        else empty++;
+    }
+
+    if (cCount == 4) score += 1000;
+    else if (cCount == 3 && empty == 1) score += 50;
+    else if (cCount == 2 && empty == 2) score += 10;
+
+    if (oCount == 3 && empty == 1) score -= 80; // bloquear adversário
+    if (oCount == 4) score -= 1000;
+
+    return score;
 }
 
 #pragma endregion

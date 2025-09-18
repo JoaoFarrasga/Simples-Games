@@ -142,6 +142,10 @@ void selectDifficultyConnectFour();
 void playerVSplayerConnectFour();
 void playerVScomputerConnectFour(int difficulty);
 int bestMoveConnectFour(int computer, int opponent);
+int evaluateBoardConnectFour(char board[6][7], char cMark, char oMark);
+int minimaxConnectFour(int depth, int alpha, int beta, int maximizingPlayer, int computer, int opponent);
+int bestMoveConnectFourMinimax(int computer, int opponent);
+int checkWindow(char window[4], char cMark, char oMark);
 
 #pragma endregion
 
